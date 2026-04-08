@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Prediction Form</title>
+    <!-- Modern Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #0f172a;
+            overflow: hidden;
+            color: #fff;
+        }
+
+        /* ---------------- Animated Blob Background ---------------- */
+        .blob {
+            position: absolute;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.6;
+            animation: float 10s infinite ease-in-out alternate;
+        }
+
+        .blob-1 { width: 400px; height: 400px; background: #3b82f6; top: -100px; left: -100px; border-radius: 50%; }
+        .blob-2 { width: 500px; height: 500px; background: #8b5cf6; bottom: -150px; right: -100px; border-radius: 50%; animation-delay: -5s; }
+        .blob-3 { width: 300px; height: 300px; background: #ec4899; top: 40%; left: 50%; transform: translate(-50%, -50%); border-radius: 50%; animation-duration: 15s; }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(30px, 50px) scale(1.1); }
+        }
+
+        /* ---------------- Floating Theme Effects ---------------- */
+        .effect-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .floating-icon {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.1);
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.15));
+            animation: floatup linear infinite;
+        }
+
+        .icon-1 { left: 5%; bottom: -80px; font-size: 3rem; animation-duration: 14s; animation-delay: 0s; }
+        .icon-2 { left: 15%; bottom: -80px; font-size: 2rem; animation-duration: 17s; animation-delay: 4s; }
+        .icon-3 { left: 25%; bottom: -80px; font-size: 4rem; animation-duration: 20s; animation-delay: 2s; }
+        .icon-4 { left: 35%; bottom: -80px; font-size: 2.5rem; animation-duration: 15s; animation-delay: 8s; }
+        .icon-5 { left: 45%; bottom: -80px; font-size: 3.5rem; animation-duration: 24s; animation-delay: 3s; }
+        .icon-6 { left: 55%; bottom: -80px; font-size: 2.2rem; animation-duration: 18s; animation-delay: 12s; }
+        .icon-7 { left: 65%; bottom: -80px; font-size: 3.2rem; animation-duration: 19s; animation-delay: 6s; }
+        .icon-8 { left: 75%; bottom: -80px; font-size: 1.8rem; animation-duration: 15s; animation-delay: 1s; }
+        .icon-9 { left: 85%; bottom: -80px; font-size: 4.5rem; animation-duration: 23s; animation-delay: 10s; }
+        .icon-10 { left: 95%; bottom: -80px; font-size: 2.7rem; animation-duration: 16s; animation-delay: 5s; }
+        .icon-11 { left: 10%; bottom: -80px; font-size: 2rem; animation-duration: 19s; animation-delay: 15s; }
+        .icon-12 { left: 30%; bottom: -80px; font-size: 3.5rem; animation-duration: 24s; animation-delay: 18s; }
+        .icon-13 { left: 50%; bottom: -80px; font-size: 2.5rem; animation-duration: 17s; animation-delay: 11s; }
+        .icon-14 { left: 70%; bottom: -80px; font-size: 4rem; animation-duration: 25s; animation-delay: 16s; }
+        .icon-15 { left: 90%; bottom: -80px; font-size: 3rem; animation-duration: 21s; animation-delay: 8s; }
+
+        @keyframes floatup {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* ---------------- Container & Glassmorphism ---------------- */
+        .container {
+            position: relative;
+            width: 850px;
+            max-width: 90%;
+            height: 520px;
+            background: rgba(255, 255, 255, 0.05); /* Glass effect */
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            display: flex;
+            z-index: 10;
+        }
+
+        /* ---------------- Left Side: Form Section ---------------- */
+        .form-section {
+            width: 55%;
+            padding: 50px 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .form-section h2 {
+            font-size: 26px;
+            font-weight: 600;
+            margin-bottom: 35px;
+            letter-spacing: 0.5px;
+            color: #ffffff;
+        }
+
+        /* Input specific styling */
+        .input-group {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px 30px 10px 0;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+            transition: border-bottom-color 0.3s ease;
+        }
+
+        .input-group input:focus {
+            border-bottom-color: #a855f7;
+        }
+
+        .input-group label {
+            position: absolute;
+            left: 0;
+            top: 10px;
+            color: #cbd5e1;
+            font-size: 13px;
+            pointer-events: none;
+            transition: 0.3s ease;
+        }
+
+        /* Floating label transition */
+        .input-group input:focus ~ label,
+        .input-group input:valid ~ label {
+            top: -16px;
+            font-size: 11px;
+            color: #d8b4fe;
+            font-weight: 500;
+        }
+
+        .input-group i {
+            position: absolute;
+            right: 0;
+            top: 10px;
+            color: #cbd5e1;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .input-group input:focus ~ i {
+            color: #a855f7;
+            text-shadow: 0 0 5px rgba(168, 85, 247, 0.4);
+        }
+
+        /* The Pill Button */
+        button.predict-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(to right, #6b21c4, #8a2be2, #9932cc);
+            background-size: 200% auto;
+            border: none;
+            border-radius: 30px;
+            color: #fff;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 15px;
+            display: block;
+            transition: 0.3s ease;
+            box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4);
+        }
+
+        button.predict-btn:hover {
+            background-position: right center;
+            box-shadow: 0 6px 20px rgba(153, 50, 204, 0.6);
+            transform: translateY(-2px);
+        }
+
+        /* Bottom text link */
+        .bottom-link {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #cbd5e1;
+            text-align: center;
+        }
+        
+        .bottom-link a {
+            color: #a855f7;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .bottom-link a:hover {
+            color: #d8b4fe;
+            text-decoration: underline;
+        }
+
+        /* ---------------- Right Side: Info Section ---------------- */
+        .info-section {
+            width: 45%;
+            padding: 50px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .info-section h1 {
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 20px;
+            color: #ffffff;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        }
+
+        .info-section p {
+            font-size: 13px;
+            font-weight: 400;
+            color: #f1f5f9;
+            line-height: 1.6;
+        }
+
+        /* Logic Results Message */
+        .predict-result {
+            display: none;
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            text-align: center;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Animated Blobs Background -->
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <!-- Subtle Floating Financial Icons -->
+    <div class="effect-container">
+        <i class="fa-solid fa-coins floating-icon icon-1"></i>
+        <i class="fa-solid fa-wallet floating-icon icon-2"></i>
+        <i class="fa-solid fa-chart-line floating-icon icon-3"></i>
+        <i class="fa-solid fa-hand-holding-dollar floating-icon icon-4"></i>
+        <i class="fa-solid fa-building-columns floating-icon icon-5"></i>
+        <i class="fa-solid fa-sack-dollar floating-icon icon-6"></i>
+        <i class="fa-solid fa-piggy-bank floating-icon icon-7"></i>
+        <i class="fa-solid fa-credit-card floating-icon icon-8"></i>
+        <i class="fa-solid fa-receipt floating-icon icon-9"></i>
+        <i class="fa-solid fa-money-bill-wave floating-icon icon-10"></i>
+        <i class="fa-solid fa-scale-balanced floating-icon icon-11"></i>
+        <i class="fa-solid fa-file-invoice-dollar floating-icon icon-12"></i>
+        <i class="fa-solid fa-landmark floating-icon icon-13"></i>
+        <i class="fa-solid fa-money-check-dollar floating-icon icon-14"></i>
+        <i class="fa-solid fa-money-bills floating-icon icon-15"></i>
+    </div>
+
+    <!-- Main Card Container -->
+    <div class="container">
+
+        <!-- Left Interactive Form -->
+        <div class="form-section">
+            <h2>Loan Prediction</h2>
+            
+            <form id="predictionForm" onsubmit="event.preventDefault(); predictLoan();">
+                <div class="input-group">
+                    <input type="text" id="fullName" required>
+                    <label>Applicant Name</label>
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                
+                <div class="input-group">
+                    <input type="number" id="annualIncome" required>
+                    <label>Annual Income (USD)</label>
+                    <i class="fa-solid fa-briefcase"></i>
+                </div>
+                
+                <div class="input-group">
+                    <input type="number" id="loanAmount" required>
+                    <label>Requested Loan Amount</label>
+                    <i class="fa-solid fa-money-check-dollar"></i>
+                </div>
+                
+                <div class="input-group">
+                    <input type="number" id="creditScore" required>
+                    <label>Credit Score</label>
+                    <i class="fa-solid fa-star-half-stroke"></i>
+                </div>
+
+                <button type="submit" class="predict-btn" id="predictBtn">
+                    Predict Eligibility
+                </button>
+            </form>
+
+            <div id="resultBox" class="predict-result"></div>
+
+            <div class="bottom-link">
+                Need more help? <a href="#">Talk to an Agent</a>
+            </div>
+        </div>
+
+        <!-- Right Side Graphic / Title -->
+        <div class="info-section">
+            <h1>CHECK YOUR<br>ELIGIBILITY!</h1>
+            <p>Our intelligent AI analyzes your financial profile in real-time to deliver instant and highly accurate loan predictions.</p>
+        </div>
+    </div>
+
+    <script>
+        function predictLoan() {
+            const btn = document.getElementById('predictBtn');
+            const resultBox = document.getElementById('resultBox');
+            
+            const income = document.getElementById('annualIncome').value;
+            const amount = document.getElementById('loanAmount').value;
+            const score = document.getElementById('creditScore').value;
+
+            // Simple loading state animation
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Analyzing...';
+            btn.style.opacity = '0.8';
+            resultBox.style.display = 'none';
+
+            // Simulate AI calculation
+            setTimeout(() => {
+                btn.innerHTML = 'Predict Eligibility';
+                btn.style.opacity = '1';
+                resultBox.style.display = 'block';
+
+                // Basic mock algorithm for realistic effect
+                if(score >= 700 && (income > amount * 0.3)) {
+                    resultBox.style.background = 'rgba(46, 213, 115, 0.1)';
+                    resultBox.style.borderColor = 'rgba(46, 213, 115, 0.3)';
+                    resultBox.style.color = '#2ed573';
+                    resultBox.innerHTML = '<i class="fa-solid fa-circle-check"></i> <strong>Approved!</strong> Excellent probability of loan approval.';
+                } else if (score >= 600 && score < 700) {
+                    resultBox.style.background = 'rgba(255, 165, 2, 0.1)';
+                    resultBox.style.borderColor = 'rgba(255, 165, 2, 0.3)';
+                    resultBox.style.color = '#ffa502';
+                    resultBox.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> <strong>Moderate.</strong> May require collateral or cosigner.';
+                } else {
+                    resultBox.style.background = 'rgba(255, 71, 87, 0.1)';
+                    resultBox.style.borderColor = 'rgba(255, 71, 87, 0.3)';
+                    resultBox.style.color = '#ff4757';
+                    resultBox.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> <strong>Declined.</strong> Credit score and income ratio too low.';
+                }
+            }, 1500);
+        }
+    </script>
+</body>
+</html>

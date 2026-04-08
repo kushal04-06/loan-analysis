@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOAN ADDA - Gold Loan Application</title>
+    <!-- Modern Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js for glowing dashboard -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            /* Lock height to viewport */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #0f172a;
+            overflow: hidden;
+            /* Prevent scrolling strictly */
+            color: #fff;
+            padding: 10px;
+        }
+
+        /* Animated Blob Background */
+        .blob {
+            position: fixed;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.6;
+            animation: float 10s infinite ease-in-out alternate;
+        }
+
+        .blob-1 {
+            width: 400px;
+            height: 400px;
+            background: #3b82f6;
+            top: -100px;
+            left: -100px;
+            border-radius: 50%;
+        }
+
+        .blob-2 {
+            width: 500px;
+            height: 500px;
+            background: #8b5cf6;
+            bottom: -150px;
+            right: -100px;
+            border-radius: 50%;
+            animation-delay: -5s;
+        }
+
+        .blob-3 {
+            width: 300px;
+            height: 300px;
+            background: #ec4899;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            animation-duration: 15s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            100% {
+                transform: translate(30px, 50px) scale(1.1);
+            }
+        }
+
+        /* Floating Theme Effects */
+        .effect-container {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .floating-icon {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.05);
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.1));
+            animation: floatup linear infinite;
+        }
+
+        .icon-1 {
+            left: 5%;
+            bottom: -80px;
+            font-size: 3rem;
+            animation-duration: 14s;
+            animation-delay: 0s;
+        }
+
+        .icon-2 {
+            left: 15%;
+            bottom: -80px;
+            font-size: 2rem;
+            animation-duration: 17s;
+            animation-delay: 4s;
+        }
+
+        .icon-3 {
+            left: 25%;
+            bottom: -80px;
+            font-size: 4rem;
+            animation-duration: 20s;
+            animation-delay: 2s;
+        }
+
+        .icon-4 {
+            left: 35%;
+            bottom: -80px;
+            font-size: 2.5rem;
+            animation-duration: 15s;
+            animation-delay: 8s;
+        }
+
+        .icon-5 {
+            left: 45%;
+            bottom: -80px;
+            font-size: 3.5rem;
+            animation-duration: 24s;
+            animation-delay: 3s;
+        }
+
+        .icon-6 {
+            left: 55%;
+            bottom: -80px;
+            font-size: 2.2rem;
+            animation-duration: 18s;
+            animation-delay: 12s;
+        }
+
+        .icon-7 {
+            left: 65%;
+            bottom: -80px;
+            font-size: 3.2rem;
+            animation-duration: 19s;
+            animation-delay: 6s;
+        }
+
+        .icon-8 {
+            left: 75%;
+            bottom: -80px;
+            font-size: 1.8rem;
+            animation-duration: 15s;
+            animation-delay: 1s;
+        }
+
+        @keyframes floatup {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+
+            20% {
+                opacity: 1;
+            }
+
+            80% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Container & Glassmorphism */
+        .container {
+            position: relative;
+            width: 850px;
+            max-width: 100%;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            z-index: 10;
+            padding: 25px 40px;
+            /* Tighter padding */
+            transition: width 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .container.expanded {
+            width: 1180px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 5px;
+            text-shadow: 0 0 10px rgba(251, 191, 36, 0.3);
+        }
+
+        .header p {
+            font-size: 13px;
+            color: #cbd5e1;
+            font-weight: 300;
+        }
+
+        /* Progress Bar */
+        .progress-bar-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            position: relative;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+        }
+
+        .progress-bar-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            height: 2px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 0;
+        }
+
+        .progress-fill {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            height: 2px;
+            width: 0%;
+            background: linear-gradient(to right, #a855f7, #ec4899);
+            z-index: 0;
+            transition: width 0.4s ease;
+        }
+
+        .step-indicator {
+            position: relative;
+            z-index: 1;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: #1e293b;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 500;
+            color: #cbd5e1;
+            transition: all 0.3s ease;
+        }
+
+        .step-indicator.active {
+            border-color: #a855f7;
+            background: rgba(168, 85, 247, 0.2);
+            color: #fff;
+            box-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
+        }
+
+        .step-indicator.completed {
+            border-color: #ec4899;
+            background: #ec4899;
+            color: #fff;
+        }
+
+        /* Form Steps */
+        .form-step {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .form-step.active-step {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .step-title {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 15px;
+            color: #fbbf24;
+            /* Gold tint for Title */
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Form Grid */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px 25px;
+            /* Tighter gap */
+        }
+
+        @media (max-width: 650px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 5px;
+            /* Tighter */
+        }
+
+        .input-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 8px 30px 8px 0;
+            /* Tighter vertical padding */
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            font-size: 13px;
+            outline: none;
+            transition: border-bottom-color 0.3s ease;
+        }
+
+        .input-group select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            cursor: pointer;
+        }
+
+        .input-group select option {
+            background-color: #1e293b;
+            color: #fff;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
+            border-bottom-color: #a855f7;
+        }
+
+        .input-group>label {
+            position: absolute;
+            left: 0;
+            top: 10px;
+            color: #cbd5e1;
+            font-size: 12px;
+            pointer-events: none;
+            transition: 0.3s ease;
+        }
+
+        .input-group input:focus~label,
+        .input-group input:not(:placeholder-shown)~label,
+        .input-group select:focus~label,
+        .input-group select:valid~label {
+            top: -12px;
+            font-size: 10px;
+            color: #d8b4fe;
+            font-weight: 500;
+        }
+
+        .input-group i {
+            position: absolute;
+            right: 0;
+            top: 10px;
+            color: #cbd5e1;
+            font-size: 12px;
+            transition: 0.3s;
+            pointer-events: none;
+        }
+
+        .input-group input:focus~i,
+        .input-group select:focus~i {
+            color: #a855f7;
+        }
+
+        /* Radio Group Custom Styling */
+        .radio-group-label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 11px;
+            color: #d8b4fe;
+            font-weight: 500;
+        }
+
+        .radio-options {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 5px;
+        }
+
+        .input-group label.radio-custom {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            font-size: 13px;
+            color: #fff;
+            position: relative;
+            top: auto;
+            left: auto;
+            pointer-events: auto;
+        }
+
+        .radio-custom input {
+            display: none;
+        }
+
+        .radio-mark {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            margin-right: 6px;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+
+        .radio-custom input:checked+.radio-mark {
+            border-color: #a855f7;
+            background: transparent;
+        }
+
+        .radio-custom input:checked+.radio-mark::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #a855f7;
+            box-shadow: 0 0 5px #a855f7;
+        }
+
+        /* Hide Number Spinners */
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type=number] {
+            -moz-appearance: textfield;
+            appearance: textfield;
+        }
+
+        /* Buttons */
+        .btn-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+            /* Tighter */
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 10px 25px;
+            border: none;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-width: 110px;
+        }
+
+        .btn-prev {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-prev:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-next,
+        .btn-submit {
+            background: linear-gradient(to right, #6b21c4, #8a2be2, #9932cc);
+            background-size: 200% auto;
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4);
+        }
+
+        .btn-next:hover,
+        .btn-submit:hover {
+            background-position: right center;
+            box-shadow: 0 6px 20px rgba(153, 50, 204, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Step 3 Grid Layout */
+        .step3-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        @media (min-width: 900px) {
+            .step3-grid {
+                grid-template-columns: 200px 260px 1fr;
+            }
+        }
+
+        /* User Details Box */
+        .user-details-box {
+            background: rgba(251, 191, 36, 0.05);
+            border: 1px solid rgba(251, 191, 36, 0.25);
+            border-radius: 12px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .details-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #fbbf24;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(251, 191, 36, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .details-row {
+            display: flex;
+            flex-direction: column;
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .details-row:last-child {
+            border-bottom: none;
+        }
+
+        .details-label {
+            font-size: 9px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+        }
+
+        .details-val {
+            font-size: 12px;
+            font-weight: 500;
+            color: #e2e8f0;
+        }
+
+        /* Summary Box */
+        .summary-box {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            /* Gold border combo */
+            border-radius: 12px;
+            padding: 15px;
+            /* Tighter */
+            margin-top: 15px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .summary-row:last-child {
+            border-bottom: none;
+        }
+
+        .summary-label {
+            color: #cbd5e1;
+            font-size: 12px;
+        }
+
+        .summary-value {
+            color: #fff;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .metric-good {
+            color: #4ade80;
+            text-shadow: 0 0 8px rgba(74, 222, 128, 0.5);
+        }
+
+        .metric-average {
+            color: #fbbf24;
+            text-shadow: 0 0 8px rgba(251, 191, 36, 0.5);
+        }
+
+        .metric-poor {
+            color: #f87171;
+            text-shadow: 0 0 8px rgba(248, 113, 113, 0.5);
+        }
+
+        /* Charts Dashboard */
+        .chart-dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            /* Tighter */
+        }
+
+        .chart-card {
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .chart-card.full-width {
+            grid-column: 1 / -1;
+            align-items: stretch;
+            height: 180px;
+            /* Reduced so no scrolling */
+        }
+
+        @media (max-width: 650px) {
+            .chart-dashboard {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-title {
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #f8fafc;
+        }
+
+        .chart-value {
+            position: absolute;
+            top: 25px;
+            left: 15px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #4ade80;
+            text-shadow: 0 0 10px rgba(74, 222, 128, 0.4);
+        }
+
+        .donut-container {
+            width: 110px;
+            /* smaller */
+            height: 110px;
+            margin-top: 35px;
+        }
+
+        .area-container {
+            width: 100%;
+            height: 100%;
+            margin-top: 25px;
+            position: relative;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Animated Blobs -->
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <!-- Floating Financial Icons -->
+    <div class="effect-container">
+        <i class="fa-solid fa-coins floating-icon icon-1"></i>
+        <i class="fa-solid fa-scale-balanced floating-icon icon-2"></i>
+        <i class="fa-solid fa-ring floating-icon icon-3"></i>
+        <i class="fa-regular fa-gem floating-icon icon-4"></i>
+        <i class="fa-solid fa-building-columns floating-icon icon-5"></i>
+        <i class="fa-solid fa-sack-dollar floating-icon icon-6"></i>
+        <i class="fa-solid fa-vault floating-icon icon-7"></i>
+        <i class="fa-solid fa-wallet floating-icon icon-8"></i>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+
+        <div class="header">
+            <!-- GOLD LOAN HEADER -->
+            <h1>🪙 Gold Loan Application</h1>
+            <p>Leverage your gold assets for instant financial liquidity.</p>
+        </div>
+
+        <!-- Progress Track (3 Steps) -->
+        <div class="progress-bar-wrapper">
+            <div class="progress-fill" id="progressFill"></div>
+            <div class="step-indicator active"><i class="fa-solid fa-user"></i></div>
+            <div class="step-indicator"><i class="fa-solid fa-gem"></i></div>
+            <div class="step-indicator"><i class="fa-solid fa-check-double"></i></div>
+        </div>
+
+        <form id="loanForm" onsubmit="event.preventDefault(); submitForm();">
+
+            <!-- STEP 1: Common Details -->
+            <div class="form-step active-step" id="step1">
+                <h3 class="step-title"><i class="fa-solid fa-user"></i> 1. Common Details</h3>
+                <div class="form-grid">
+                    <div class="input-group">
+                        <input type="text" id="fullName" placeholder=" " required>
+                        <label>Full Name</label>
+                        <i class="fa-regular fa-id-card"></i>
+                    </div>
+                    <div class="input-group">
+                        <input type="number" id="age" min="18" max="100" placeholder=" " required>
+                        <label>Age</label>
+                        <i class="fa-solid fa-calendar-days"></i>
+                    </div>
+
+                    <div class="input-group">
+                        <select id="employmentStatus" required>
+                            <option value="" disabled selected></option>
+                            <option value="Salaried">Salaried</option>
+                            <option value="Self-employed">Self-employed</option>
+                            <option value="Business">Business</option>
+                            <option value="Other">Other / None</option>
+                        </select>
+                        <label>Employment Status</label>
+                        <i class="fa-solid fa-user-tie"></i>
+                    </div>
+
+                    <div class="input-group">
+                        <input type="number" id="monthlyIncome" min="0" placeholder=" " required>
+                        <label>Monthly Income (₹)</label>
+                        <i class="fa-solid fa-money-bill-wave"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STEP 2: Gold Loan Specific Details -->
+            <div class="form-step" id="step2">
+                <h3 class="step-title"><i class="fa-solid fa-gem"></i> 2. Gold Loan Specific</h3>
+                <div class="form-grid">
+
+                    <div class="input-group">
+                        <input type="number" id="goldWeight" min="1" placeholder=" " required>
+                        <label>Gold Weight (grams)</label>
+                        <i class="fa-solid fa-scale-unbalanced"></i>
+                    </div>
+
+                    <div class="input-group">
+                        <select id="goldPurity" required>
+                            <option value="" disabled selected></option>
+                            <option value="18K">18 Karat</option>
+                            <option value="20K">20 Karat</option>
+                            <option value="22K">22 Karat</option>
+                            <option value="24K">24 Karat</option>
+                        </select>
+                        <label>Gold Purity</label>
+                        <i class="fa-regular fa-gem"></i>
+                    </div>
+
+                    <div class="input-group">
+                        <input type="number" id="estimatedGoldValue" min="1000" placeholder=" " required>
+                        <label>Estimated Gold Value (₹)</label>
+                        <i class="fa-solid fa-coins"></i>
+                    </div>
+
+                    <div class="input-group">
+                        <input type="number" id="loanAmount" min="1000" placeholder=" " required>
+                        <label>Loan Amount Required (₹)</label>
+                        <i class="fa-solid fa-sack-dollar"></i>
+                    </div>
+
+                    <div class="input-group">
+                        <input type="number" id="loanTenure" min="1" max="100" placeholder=" " required>
+                        <label>Loan Tenure (Years)</label>
+                        <i class="fa-solid fa-calendar-alt"></i>
+                    </div>
+
+                    <div class="input-group">
+                        <select id="loanPurpose" required>
+                            <option value="" disabled selected></option>
+                            <option value="Agriculture">Agriculture</option>
+                            <option value="Medical">Medical Emergency</option>
+                            <option value="Business">Business / Trading</option>
+                            <option value="Education">Education</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <label>Purpose of Loan</label>
+                        <i class="fa-solid fa-bullseye"></i>
+                    </div>
+
+                    <div class="input-group full-width" style="border-bottom: none;">
+                        <span class="radio-group-label">Ownership of Gold</span>
+                        <div class="radio-options">
+                            <label class="radio-custom">
+                                <input type="radio" name="goldOwnership" value="Self" required>
+                                <div class="radio-mark"></div> Self
+                            </label>
+                            <label class="radio-custom">
+                                <input type="radio" name="goldOwnership" value="Family">
+                                <div class="radio-mark"></div> Family
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STEP 3: System Calculation & Review with Dashboard -->
+            <div class="form-step" id="step3">
+
+                <div class="step3-grid">
+
+                    <!-- Column 1: User Details Summary -->
+                    <div class="step3-details-col">
+                        <div class="user-details-box">
+                            <div class="details-title"><i class="fa-solid fa-user-check"></i> Your Details</div>
+                            <div class="details-row">
+                                <span class="details-label">Applicant Name</span>
+                                <span class="details-val" id="d_fullName">—</span>
+                            </div>
+                            <div class="details-row">
+                                <span class="details-label">Age &amp; Income</span>
+                                <span class="details-val" id="d_ageIncome">—</span>
+                            </div>
+                            <div class="details-row">
+                                <span class="details-label">Employment</span>
+                                <span class="details-val" id="d_employment">—</span>
+                            </div>
+                            <div class="details-row">
+                                <span class="details-label">Gold Weight (grams)</span>
+                                <span class="details-val" id="d_goldWeight">—</span>
+                            </div>
+                            <div class="details-row">
+                                <span class="details-label">Gold Purity</span>
+                                <span class="details-val" id="d_goldPurity">—</span>
+                            </div>
+                            <div class="details-row">
+                                <span class="details-label">Est. Gold Value</span>
+                                <span class="details-val" id="d_goldValue">—</span>
+                            </div>
+                            <div class="details-row">
+                                <span class="details-label">Loan Amount</span>
+                                <span class="details-val" id="d_loanAmount">—</span>
+                            </div>
+                            <div class="details-row">
+                                <span class="details-label">Loan Tenure</span>
+                                <span class="details-val" id="d_loanTenure">—</span>
+                            </div>
+                            <div class="details-row">
+                                <span class="details-label">Purpose of Loan</span>
+                                <span class="details-val" id="d_loanPurpose">—</span>
+                            </div>
+                            <div class="details-row">
+                                <span class="details-label">Gold Ownership</span>
+                                <span class="details-val" id="d_goldOwnership">—</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Column 2: System Review Metrics -->
+                    <div class="step3-left">
+                        <h3 class="step-title"><i class="fa-solid fa-check-double"></i> 3. System Review</h3>
+                        <p style="font-size: 11px; color: #cbd5e1; margin-bottom: 15px;">Review your financial metrics
+                            computed securely by our system. High risk metrics may impact loan approval.</p>
+
+                        <div class="summary-box">
+                            <div class="summary-row">
+                                <span class="summary-label">Loan-to-Value (LTV)</span>
+                                <span class="summary-value" id="ltvResult">0%</span>
+                            </div>
+                            <div class="summary-row">
+                                <span class="summary-label">EMI-to-Income (FOIR)</span>
+                                <span class="summary-value" id="etiResult">0%</span>
+                            </div>
+                            <div class="summary-row">
+                                <span class="summary-label">Gold Value Status</span>
+                                <span class="summary-value" id="statusResult">Valid</span>
+                            </div>
+                            <div class="summary-row">
+                                <span class="summary-label">Est. Monthly EMI</span>
+                                <span class="summary-value"
+                                    style="color: #fbbf24; text-shadow: 0 0 10px rgba(251,191,36,0.5);"
+                                    id="estPayment">₹0</span>
+                            </div>
+                            <div class="summary-row"
+                                style="margin-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+                                <span class="summary-label">Total Amount Payable</span>
+                                <span class="summary-value" style="color: #f8fafc;" id="totalPayable">₹0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Glowing Charts Dashboard -->
+                    <div class="step3-right chart-dashboard">
+
+                        <!-- Chart 1: Gold LTV Breakdown -->
+                        <div class="chart-card">
+                            <div class="chart-title">Collateral LTV Map</div>
+                            <div class="chart-value" style="color: #fbbf24; text-shadow: 0 0 10px rgba(251,191,36,0.5);"
+                                id="loanValueLabel">₹0</div>
+                            <div class="donut-container">
+                                <canvas id="fundingChart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Chart 2: Monthly Cashflow (Donut) -->
+                        <div class="chart-card">
+                            <div class="chart-title">Monthly Obligations</div>
+                            <div class="chart-value" style="color: #3b82f6;" id="debtValueLabel">₹0</div>
+                            <div class="donut-container">
+                                <canvas id="cashflowChart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Chart 3: Loan Progression (Area/Line) -->
+                        <div class="chart-card full-width">
+                            <div class="chart-title">Gold Loan Progression</div>
+                            <div class="area-container">
+                                <canvas id="amortizationChart"></canvas>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Buttons -->
+            <div class="btn-group">
+                <button type="button" class="btn btn-prev hidden" id="prevBtn" onclick="nextPrev(-1)">
+                    <i class="fa-solid fa-arrow-left"></i> Previous
+                </button>
+                <div style="flex-grow: 1;"></div>
+                <button type="button" class="btn btn-next" id="nextBtn" onclick="nextPrev(1)">
+                    Next <i class="fa-solid fa-arrow-right"></i>
+                </button>
+                <button type="submit" class="btn btn-submit hidden" id="submitBtn">
+                    Detailed Analysis <i class="fa-solid fa-paper-plane"></i>
+                </button>
+            </div>
+        </form>
+
+    </div>
+
+    <script>
+        // Global variables for charts
+        let chartFunding = null;
+        let chartCashflow = null;
+        let chartAmortization = null;
+
+        // Custom glow plugin for Chart.js to mimic the requested glassmorphic neon aesthetic
+        const glowPlugin = {
+            id: 'glowPlugin',
+            beforeDatasetsDraw: function (chart) {
+                const ctx = chart.ctx;
+                ctx.save();
+                ctx.shadowColor = chart.config.options.plugins.glowPlugin.color || 'rgba(0, 0, 0, 0)';
+                ctx.shadowBlur = chart.config.options.plugins.glowPlugin.blur || 0;
+                ctx.shadowOffsetX = 0;
+                ctx.shadowOffsetY = 0;
+            },
+            afterDatasetsDraw: function (chart) {
+                chart.ctx.restore();
+            }
+        };
+        Chart.register(glowPlugin);
+
+        let currentTab = 0;
+        showTab(currentTab);
+
+        function showTab(n) {
+            const tabs = document.getElementsByClassName("form-step");
+            tabs[n].style.display = "block";
+            tabs[n].style.animation = "fadeIn 0.5s ease";
+
+            const container = document.querySelector('.container');
+
+            // Button visibility & Width expansion logic
+            if (n == 0) {
+                document.getElementById("prevBtn").classList.add("hidden");
+                container.classList.remove("expanded");
+            } else {
+                document.getElementById("prevBtn").classList.remove("hidden");
+            }
+
+            if (n == (tabs.length - 1)) {
+                // Expanding to fit the dashboard
+                container.classList.add("expanded");
+                document.getElementById("nextBtn").classList.add("hidden");
+                document.getElementById("submitBtn").classList.remove("hidden");
+
+                // Calculate metrics and draw/update charts
+                calculateMetrics();
+            } else {
+                container.classList.remove("expanded");
+                document.getElementById("nextBtn").classList.remove("hidden");
+                document.getElementById("submitBtn").classList.add("hidden");
+            }
+
+            updateProgress(n, tabs.length);
+        }
+
+        function nextPrev(n) {
+            const tabs = document.getElementsByClassName("form-step");
+
+            if (n == 1 && !validateForm()) return false;
+
+            tabs[currentTab].style.display = "none";
+            currentTab = currentTab + n;
+
+            if (currentTab >= tabs.length) {
+                return false;
+            }
+            showTab(currentTab);
+        }
+
+        function validateForm() {
+            let valid = true;
+            const tabs = document.getElementsByClassName("form-step");
+
+            const inputs = tabs[currentTab].querySelectorAll("input[required], select[required]");
+
+            for (let i = 0; i < inputs.length; i++) {
+                if (inputs[i].type === 'radio') {
+                    const name = inputs[i].name;
+                    if (!document.querySelector(`input[name="${name}"]:checked`)) {
+                        valid = false;
+                        inputs[i].parentElement.parentElement.parentElement.querySelector('.radio-group-label').style.color = "#f87171";
+                    } else {
+                        inputs[i].parentElement.parentElement.parentElement.querySelector('.radio-group-label').style.color = "#d8b4fe";
+                    }
+                }
+                else if (inputs[i].value === "") {
+                    inputs[i].style.borderBottom = "2px solid #f87171";
+                    valid = false;
+                } else {
+                    inputs[i].style.borderBottom = "2px solid rgba(255, 255, 255, 0.2)";
+                }
+            }
+
+            inputs.forEach(input => {
+                input.addEventListener('input', function () {
+                    if (this.value !== "") this.style.borderBottom = "2px solid rgba(255, 255, 255, 0.2)";
+                });
+            });
+
+            // Specific validation: Gold Loans cap at ~85% of physical value legally
+            if (currentTab === 1) {
+                const goldValue = parseFloat(document.getElementById("estimatedGoldValue").value) || 0;
+                const loanAmount = parseFloat(document.getElementById("loanAmount").value) || 0;
+
+                if (goldValue > 0 && loanAmount > goldValue * 0.90) {
+                    document.getElementById("loanAmount").style.borderBottom = "2px solid #f87171";
+                    valid = false;
+                    alert("Loan Amount cannot exceed 90% of the Estimated Gold Value.");
+                }
+            }
+
+            return valid;
+        }
+
+        function updateProgress(n, total) {
+            const steps = document.querySelectorAll(".step-indicator");
+            const fill = document.getElementById("progressFill");
+
+            const percent = (n / (total - 1)) * 100;
+            fill.style.width = percent + "%";
+
+            for (let i = 0; i < steps.length; i++) {
+                steps[i].className = steps[i].className.replace(" active", "");
+                steps[i].className = steps[i].className.replace(" completed", "");
+
+                if (i < n) {
+                    steps[i].className += " completed";
+                } else if (i === n) {
+                    steps[i].className += " active";
+                }
+            }
+        }
+
+        function formatCompactCurrency(number) {
+            return Intl.NumberFormat('en-IN', {
+                style: 'currency',
+                currency: 'INR',
+                notation: "compact",
+                maximumFractionDigits: 1
+            }).format(number);
+        }
+
+        function formatCurrency(number) {
+            return Intl.NumberFormat('en-IN', {
+                style: 'currency',
+                currency: 'INR',
+                maximumFractionDigits: 0
+            }).format(number);
+        }
+
+        function populateUserDetails() {
+            const val = id => document.getElementById(id).value || '—';
+            const inc = parseFloat(document.getElementById('monthlyIncome').value) || 0;
+            const gv = parseFloat(document.getElementById('estimatedGoldValue').value) || 0;
+            const la = parseFloat(document.getElementById('loanAmount').value) || 0;
+
+            document.getElementById('d_fullName').textContent = val('fullName');
+            document.getElementById('d_ageIncome').textContent =
+                (val('age') !== '—' ? val('age') + ' yrs' : '—') +
+                (inc > 0 ? ' · ₹' + inc.toLocaleString('en-IN') + '/mo' : '');
+            document.getElementById('d_employment').textContent = val('employmentStatus');
+            document.getElementById('d_goldWeight').textContent = val('goldWeight') !== '—' ? val('goldWeight') + ' g' : '—';
+            document.getElementById('d_goldPurity').textContent = val('goldPurity');
+            document.getElementById('d_goldValue').textContent = gv > 0 ? '₹' + gv.toLocaleString('en-IN') : '—';
+            document.getElementById('d_loanAmount').textContent = la > 0 ? '₹' + la.toLocaleString('en-IN') : '—';
+            document.getElementById('d_loanTenure').textContent = val('loanTenure') !== '—' ? val('loanTenure') + ' Year(s)' : '—';
+            document.getElementById('d_loanPurpose').textContent = val('loanPurpose');
+            const owned = document.querySelector('input[name="goldOwnership"]:checked');
+            document.getElementById('d_goldOwnership').textContent = owned ? owned.value : '—';
+        }
+
+        function calculateMetrics() {
+            populateUserDetails();
+            let income = parseFloat(document.getElementById("monthlyIncome").value) || 0;
+            let loanAmount = parseFloat(document.getElementById("loanAmount").value) || 0;
+            let goldValue = parseFloat(document.getElementById("estimatedGoldValue").value) || 0;
+            let loanTenureYears = parseFloat(document.getElementById("loanTenure").value) || 5;
+            let loanTermMonths = loanTenureYears * 12;
+
+            // Interest approx 11.5% for Gold Loan
+            let interestRate = 11.5;
+            let r = (interestRate / 100) / 12;
+            let newEmi = 0;
+            if (r > 0) {
+                newEmi = loanAmount * r * Math.pow(1 + r, loanTermMonths) / (Math.pow(1 + r, loanTermMonths) - 1);
+            } else {
+                newEmi = loanAmount / loanTermMonths;
+            }
+
+            let totalPayable = newEmi * loanTermMonths;
+
+            // ETI (FOIR)
+            let eti = income > 0 ? (newEmi / income) * 100 : 0;
+            const etiEl = document.getElementById("etiResult");
+            etiEl.innerText = eti.toFixed(1) + "%";
+            etiEl.className = eti <= 30 ? "summary-value metric-good" : (eti <= 45 ? "summary-value metric-average" : "summary-value metric-poor");
+
+            // LTV (Loan-to-Value)
+            let ltv = goldValue > 0 ? (loanAmount / goldValue) * 100 : 0;
+            const ltvEl = document.getElementById("ltvResult");
+            ltvEl.innerText = ltv.toFixed(1) + "%";
+            ltvEl.className = ltv <= 75 ? "summary-value metric-good" : (ltv <= 85 ? "summary-value metric-average" : "summary-value metric-poor");
+
+            let statusEl = document.getElementById("statusResult");
+            if (ltv > 85) {
+                statusEl.innerText = "Over-Leveraged";
+                statusEl.className = "summary-value metric-poor";
+            } else {
+                statusEl.innerText = "Accepted Collateral";
+                statusEl.className = "summary-value metric-good";
+            }
+
+            // Amounts mapped with INR formatting
+            document.getElementById("estPayment").innerText = formatCurrency(newEmi);
+            document.getElementById("totalPayable").innerText = formatCurrency(totalPayable);
+            document.getElementById("loanValueLabel").innerText = formatCompactCurrency(loanAmount);
+            document.getElementById("debtValueLabel").innerText = formatCompactCurrency(newEmi);
+
+            // RENDER CHARTS
+            renderDashboard(loanAmount, goldValue, income, newEmi, loanTermMonths, totalPayable);
+        }
+
+        function renderDashboard(loan, goldValue, income, newEmi, totalMonths, totalPayable) {
+
+            let goldRemaining = goldValue > loan ? goldValue - loan : 0;
+
+            // Chart 1: Funding Portfolio (Donut -> Loan vs Remaining Gold Value)
+            if (chartFunding) chartFunding.destroy();
+            const ctxFunding = document.getElementById('fundingChart').getContext('2d');
+            chartFunding = new Chart(ctxFunding, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Loan Requested (LTV)', 'Remaining Gold Equity'],
+                    datasets: [{
+                        data: [loan, goldRemaining],
+                        backgroundColor: ['#fbbf24', 'rgba(251, 191, 36, 0.2)'],
+                        borderColor: ['#f59e0b', 'rgba(0,0,0,0)'],
+                        borderWidth: 2,
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '75%',
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { backgroundColor: 'rgba(15, 23, 42, 0.9)', titleColor: '#fbbf24', bodyColor: '#fff', padding: 10, borderColor: '#fbbf24', borderWidth: 1 },
+                        glowPlugin: { color: 'rgba(251, 191, 36, 0.6)', blur: 15 } // Bright Gold/Yellow glow
+                    }
+                }
+            });
+
+            // Chart 2: Monthly Cashflow (Donut -> New EMI vs Remaining Income)
+            if (chartCashflow) chartCashflow.destroy();
+            let remainingIncome = income > newEmi ? (income - newEmi) : 0;
+            const ctxCashflow = document.getElementById('cashflowChart').getContext('2d');
+            chartCashflow = new Chart(ctxCashflow, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Gold Loan EMI', 'Free Income'],
+                    datasets: [{
+                        data: [newEmi, remainingIncome],
+                        backgroundColor: ['#3b82f6', 'rgba(59, 130, 246, 0.2)'],
+                        borderColor: ['#2563eb', 'rgba(0,0,0,0)'],
+                        borderWidth: 2,
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '75%',
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { backgroundColor: 'rgba(15, 23, 42, 0.9)', titleColor: '#3b82f6', bodyColor: '#fff', padding: 10, borderColor: '#3b82f6', borderWidth: 1 },
+                        glowPlugin: { color: 'rgba(59, 130, 246, 0.6)', blur: 15 } // Bright Blue glow
+                    }
+                }
+            });
+
+            // Chart 3: Amortization Projection (Area/Line)
+            // Simulating a balance curve
+            let balances = [];
+            let labels = [];
+            let points = 6;
+            for (let i = 0; i <= points; i++) {
+                // Linearly decay as approximation for aesthetics
+                let val = loan * (1 - (i / points));
+                // Add tiny non-linear curve for authenticity
+                val = val + (val * 0.1 * Math.sin(i));
+                if (i === points) val = 0; // force 0 at end
+                balances.push(val);
+                labels.push(`Year ${Math.round((totalMonths / 12) * (i / points))}`);
+            }
+
+            if (chartAmortization) chartAmortization.destroy();
+            const ctxArea = document.getElementById('amortizationChart').getContext('2d');
+
+            // Neon gradient for area
+            let gradient = ctxArea.createLinearGradient(0, 0, 0, 400);
+            gradient.addColorStop(0, 'rgba(251, 191, 36, 0.6)'); // Gold Area
+            gradient.addColorStop(1, 'rgba(251, 191, 36, 0)');
+
+            chartAmortization = new Chart(ctxArea, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Remaining Principal',
+                        data: balances,
+                        borderColor: '#fbbf24',
+                        backgroundColor: gradient,
+                        borderWidth: 3,
+                        pointBackgroundColor: '#0f172a',
+                        pointBorderColor: '#fbbf24',
+                        pointBorderWidth: 2,
+                        pointRadius: 4,
+                        pointHoverRadius: 6,
+                        fill: true,
+                        tension: 0.4 // Smooth curve
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: 'rgba(255, 255, 255, 0.05)', drawBorder: false },
+                            ticks: { color: '#94a3b8', font: { family: "'Poppins', sans-serif", size: 10 }, callback: function (value) { return formatCompactCurrency(value); } }
+                        },
+                        x: {
+                            grid: { color: 'rgba(255, 255, 255, 0.05)', drawBorder: false },
+                            ticks: { color: '#94a3b8', font: { family: "'Poppins', sans-serif", size: 10 } }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { backgroundColor: 'rgba(15, 23, 42, 0.9)', titleColor: '#fbbf24', bodyColor: '#fff', padding: 10, borderColor: 'rgba(255,255,255,0.1)', borderWidth: 1, mode: 'index', intersect: false },
+                        glowPlugin: { color: 'rgba(251, 191, 36, 0.5)', blur: 10 }
+                    },
+                    interaction: { mode: 'nearest', axis: 'x', intersect: false }
+                }
+            });
+        }
+
+        function submitForm() {
+            const btn = document.getElementById("submitBtn");
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Processing...';
+            btn.style.pointerEvents = "none";
+
+            setTimeout(() => {
+                btn.innerHTML = '<i class="fa-solid fa-check"></i> OPENING INFO';
+                btn.style.background = "#fbbf24";
+                btn.style.boxShadow = "0 4px 15px rgba(251, 191, 36, 0.4)";
+
+                setTimeout(() => {
+                    window.location.href = '../3)dash board/index.html';
+                }, 1500);
+            }, 2000);
+        }
+    </script>
+</body>
+
+</html>

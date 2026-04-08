@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Loan Types</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #0f172a;
+            overflow: hidden;
+            color: #fff;
+        }
+
+        .blob {
+            position: absolute;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.6;
+            animation: float 10s infinite ease-in-out alternate;
+        }
+
+        .blob-1 {
+            width: 400px;
+            height: 400px;
+            background: #3b82f6;
+            top: -100px;
+            left: -100px;
+            border-radius: 50%;
+        }
+
+        .blob-2 {
+            width: 500px;
+            height: 500px;
+            background: #8b5cf6;
+            bottom: -150px;
+            right: -100px;
+            border-radius: 50%;
+            animation-delay: -5s;
+        }
+
+        .blob-3 {
+            width: 300px;
+            height: 300px;
+            background: #ec4899;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            animation-duration: 15s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            100% {
+                transform: translate(30px, 50px) scale(1.1);
+            }
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .sidebar {
+            width: 250px;
+            background: rgba(255, 255, 255, 0.05);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px 15px;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .sidebar-logo svg {
+            width: 28px;
+            height: 28px;
+            stroke: #4ade80;
+            stroke-width: 2;
+            fill: none;
+        }
+
+        .sidebar-logo h3 {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #4ade80 0%, #3b82f6 50%, #a855f7 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: logoShine 4s linear infinite;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin: 0;
+        }
+
+        @keyframes logoShine {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+        .menu-item {
+            padding: 12px 20px;
+            margin-bottom: 10px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: #cbd5e1;
+            font-weight: 500;
+        }
+
+        .menu-item:hover,
+        .menu-item.active {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .daily-schemes {
+            margin-top: 5px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            flex: 1;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .scheme-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 10px;
+        }
+
+        .scheme-header h4 {
+            font-size: 15px;
+            color: #a5b4fc;
+            font-weight: 600;
+        }
+
+        .schemes-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            overflow-y: hidden;
+        }
+
+        /* Custom scrollbar for schemes list */
+        .schemes-list::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .schemes-list::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .schemes-list::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+
+        .scheme-item {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+            cursor: pointer;
+        }
+
+        .scheme-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(99, 102, 241, 0.3);
+            transform: translateX(3px);
+        }
+
+        .scheme-icon {
+            font-size: 18px;
+            background: rgba(255, 255, 255, 0.1);
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+        }
+
+        .scheme-info h5 {
+            color: #f8fafc;
+            font-size: 12px;
+            margin-bottom: 2px;
+        }
+
+        .scheme-info p {
+            color: #10b981;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .offers {
+            margin-top: auto;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(168, 85, 247, 0.2));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 16px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .offers::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0) 100%);
+            transform: skewX(-20deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            100% {
+                left: 200%;
+            }
+        }
+
+        .main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            padding: 0 20px;
+        }
+
+        .main::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .main::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .main::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+
+        .topbar {
+            padding: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .topbar h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin: 0;
+            background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        /* Language Selector Styling */
+        .lang-selector {
+            position: relative;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 8px 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+
+        .lang-selector:hover {
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+        }
+
+        .lang-dropdown {
+            position: absolute;
+            top: 130%;
+            right: 0;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            width: 150px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 100;
+            max-height: 250px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Custom scrollbar for lang-dropdown */
+        .lang-dropdown::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .lang-dropdown::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .lang-dropdown::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+
+        .lang-selector:hover .lang-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .lang-option {
+            padding: 12px 15px;
+            color: #cbd5e1;
+            transition: all 0.2s ease;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .lang-option:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        .lang-option img {
+            width: 20px;
+            border-radius: 3px;
+        }
+
+        /* Profile */
+        .profile {
+            position: relative;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 8px 16px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .profile:hover,
+        .profile.active {
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .profile img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #8b5cf6;
+        }
+
+        .profile>span {
+            font-weight: 600;
+            color: #f8fafc;
+        }
+
+        .profile-dropdown {
+            position: absolute;
+            top: 130%;
+            right: 0;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            width: 250px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 100;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            padding: 15px;
+            cursor: default;
+            pointer-events: none;
+        }
+
+        .profile.active .profile-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .profile-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .profile-info img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #a855f7;
+        }
+
+        .profile-info h4 {
+            color: #fff;
+            font-size: 16px;
+            margin: 0 0 5px 0;
+            font-weight: 600;
+        }
+
+        .profile-info p {
+            color: #94a3b8;
+            font-size: 12px;
+            margin: 0;
+        }
+
+        .profile-dropdown hr {
+            border: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin: 10px 0;
+        }
+
+        .profile-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #cbd5e1;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .profile-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            transform: translateX(5px);
+        }
+
+        .profile-item.logout {
+            color: #ef4444;
+        }
+
+        .profile-item.logout:hover {
+            background: rgba(239, 68, 68, 0.1);
+            color: #f87171;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            padding: 10px 30px 40px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px 20px;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 220px;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.1), transparent 70%);
+            z-index: 1;
+        }
+
+        .card:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(99, 102, 241, 0.2);
+            transform: translateY(-10px);
+        }
+
+        .card-icon {
+            font-size: 55px;
+            margin-bottom: 20px;
+            text-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
+        }
+
+        .card:hover .card-icon {
+            transform: scale(1.15);
+        }
+
+        .card h4 {
+            font-size: 22px;
+            font-weight: 600;
+            color: #f1f5f9;
+            margin-bottom: 8px;
+        }
+
+        .card p {
+            font-size: 13px;
+            color: #94a3b8;
+            margin-bottom: 10px;
+        }
+
+        .card-btn {
+            margin-top: 15px;
+            padding: 10px 24px;
+            border-radius: 30px;
+            border: none;
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+            position: relative;
+            z-index: 2;
+        }
+
+        .card:hover .card-btn {
+            opacity: 1;
+            transform: translateY(-5px);
+        }
+
+        .card-btn:hover {
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.6);
+            filter: brightness(1.1);
+        }
+
+        /* Custom Popup Tooltip */
+        .custom-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(99, 102, 241, 0.5);
+            border-radius: 10px;
+            padding: 15px;
+            color: #cbd5e1;
+            font-size: 13px;
+            min-width: 220px;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s ease, visibility 0.2s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            line-height: 1.6;
+        }
+
+        .custom-tooltip h5 {
+            color: #fff;
+            font-size: 15px;
+            margin-bottom: 5px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 5px;
+        }
+
+        .custom-tooltip strong {
+            color: #a5b4fc;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <div class="container">
+
+        <div class="sidebar">
+            <div class="sidebar-logo">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z"></path>
+                </svg>
+                <h3 data-translate="appName">LOAN ADDA</h3>
+            </div>
+
+            <div class="menu-item active">
+                <span>📊</span> <span data-translate="navDashboard">Dashboard</span>
+            </div>
+            <div class="daily-schemes">
+                <div class="scheme-header">
+                    <span>🔥</span>
+                    <h4>Daily Schemes</h4>
+                </div>
+                <div class="schemes-list">
+                    <div class="scheme-item">
+                        <span class="scheme-icon">🏠</span>
+                        <div class="scheme-info">
+                            <h5 data-translate="homeLoan">Home Loan</h5>
+                            <p>Rate dropped to 8.2%!</p>
+                        </div>
+                    </div>
+                    <div class="scheme-item">
+                        <span class="scheme-icon">🚗</span>
+                        <div class="scheme-info">
+                            <h5 data-translate="vehicleLoan">Vehicle Loan</h5>
+                            <p>Zero processing fee today</p>
+                        </div>
+                    </div>
+                    <div class="scheme-item">
+                        <span class="scheme-icon">🎓</span>
+                        <div class="scheme-info">
+                            <h5 data-translate="eduLoan">Education Loan</h5>
+                            <p>Extended grace period</p>
+                        </div>
+                    </div>
+                    <div class="scheme-item">
+                        <span class="scheme-icon">💰</span>
+                        <div class="scheme-info">
+                            <h5 data-translate="goldLoan">Gold Loan</h5>
+                            <p>Disbursal in 10 mins</p>
+                        </div>
+                    </div>
+                    <div class="scheme-item">
+                        <span class="scheme-icon">🏢</span>
+                        <div class="scheme-info">
+                            <h5 data-translate="businessLoan">Business Loan</h5>
+                            <p>5% cashback on EMI</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="offers">
+                <h4 data-translate="specialOffers" style="margin-bottom: 2px; font-size: 14px;">Special Offers</h4>
+                <p data-translate="preApproved" style="font-size: 11px; color: #cbd5e1; margin-bottom: 8px;">Get
+                    pre-approved in seconds!
+                </p>
+                <a href="../4)loan prediction page/prediction_theme.html" style="text-decoration: none;">
+                    <button class="card-btn" style="width: 100%; padding: 6px; font-size: 11px; margin-top: 5px;">Get Started</button>
+                </a>
+            </div>
+        </div>
+
+        <div class="main">
+
+            <div class="topbar">
+                <h1 data-translate="pageTitle">Loan Categories</h1>
+
+                <div class="header-actions">
+                    <!-- Language Selector -->
+                    <div class="lang-selector">
+                        <span id="current-lang">🌐 EN</span> <span>▼</span>
+                        <div class="lang-dropdown">
+                            <div class="lang-option" onclick="changeLanguage('en')">🇬🇧 English</div>
+                            <div class="lang-option" onclick="changeLanguage('es')">🇪🇸 Español</div>
+                            <div class="lang-option" onclick="changeLanguage('hi')">🇮🇳 हिन्दी</div>
+                            <div class="lang-option" onclick="changeLanguage('kn')">🇮🇳 ಕನ್ನಡ</div>
+                            <div class="lang-option" onclick="changeLanguage('ta')">🇮🇳 தமிழ்</div>
+                            <div class="lang-option" onclick="changeLanguage('te')">🇮🇳 తెలుగు</div>
+                            <div class="lang-option" onclick="changeLanguage('fr')">🇫🇷 Français</div>
+                            <div class="lang-option" onclick="changeLanguage('de')">🇩🇪 Deutsch</div>
+                        </div>
+                    </div>
+
+                    <div class="profile" onclick="document.querySelector('.profile').classList.toggle('active')">
+                        <span id="prof-name-top">Jane Doe</span>
+                        <img id="prof-img-top"
+                            src="https://ui-avatars.com/api/?name=Jane+Doe&background=6366f1&color=fff" alt="user">
+
+                        <div class="profile-dropdown" onclick="event.stopPropagation()">
+                            <div class="profile-info">
+                                <img id="prof-img-drop"
+                                    src="https://ui-avatars.com/api/?name=Jane+Doe&background=6366f1&color=fff"
+                                    alt="user">
+                                <div>
+                                    <h4 id="prof-name-drop">Jane Doe</h4>
+                                    <p id="prof-email-drop">jane.doe@example.com</p>
+                                </div>
+                            </div>
+
+                            <!-- Basic User Details -->
+                            <div
+                                style="padding: 12px; background: rgba(0,0,0,0.2); border-radius: 8px; margin-bottom: 10px; font-size: 12px; color: #cbd5e1;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                                    <span>Username:</span> <span id="prof-username" style="color: #fff;">jane_doe</span>
+                                </div>
+
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                                    <span>Phone:</span> <span id="prof-phone" style="color: #fff;">+91 9876543210</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                                    <span>Age:</span> <span id="prof-age" style="color: #fff;">28 Years</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between;">
+                                    <span>Income:</span> <span id="prof-income" style="color: #fff;">₹ 85,000 /
+                                        mon</span>
+                                </div>
+                            </div>
+
+                            <hr>
+                            <div class="profile-item logout"
+                                onclick="window.location.href = '../2)login page/login.html';"><span>🚪</span> Logout
+                            </div>
+                        </div>
+                    </div>
+
+                    <script>
+                        document.addEventListener("DOMContentLoaded", () => {
+                            const pName = localStorage.getItem("prof_name");
+                            if (pName) {
+                                document.getElementById("prof-name-top").innerText = pName;
+                                document.getElementById("prof-name-drop").innerText = pName;
+                                const avatarSrc = `https://ui-avatars.com/api/?name=${encodeURIComponent(pName)}&background=6366f1&color=fff`;
+                                document.getElementById("prof-img-top").src = avatarSrc;
+                                document.getElementById("prof-img-drop").src = avatarSrc;
+                            }
+                            const pEmail = localStorage.getItem("prof_email");
+                            if (pEmail) document.getElementById("prof-email-drop").innerText = pEmail;
+
+                            const pUsername = localStorage.getItem("prof_username");
+                            if (pUsername) document.getElementById("prof-username").innerText = pUsername;
+
+                            const pPhone = localStorage.getItem("prof_phone");
+                            if (pPhone) document.getElementById("prof-phone").innerText = pPhone;
+
+                            const pAge = localStorage.getItem("prof_age");
+                            if (pAge) document.getElementById("prof-age").innerText = pAge + " Years";
+
+                            const pIncome = localStorage.getItem("prof_income");
+                            if (pIncome) document.getElementById("prof-income").innerText = "₹ " + pIncome + " / mon";
+                        });
+                    </script>
+                </div>
+            </div>
+
+            <div class="cards">
+                <div class="card"
+                    data-details="<h5>Home Loan Details</h5><strong>Interest Rate:</strong> 8.5% p.a.<br><strong>Max Tenure:</strong> 30 Years<br><strong>Processing Fee:</strong> 0% for premium users.">
+                    <div class="card-icon">🏠</div>
+                    <h4 data-translate="homeLoan">Home Loan</h4>
+                    <p data-translate="homeLoanDesc">Build your dream home</p>
+                    <button class="card-btn" data-translate="applyNow"
+                        onclick="window.location.href='../loan types/home loan/home_loan.html'">Apply Now</button>
+                </div>
+
+                <div class="card"
+                    data-details="<h5>Personal Loan Details</h5><strong>Interest Rate:</strong> 10.5% p.a.<br><strong>Max Tenure:</strong> 5 Years<br><strong>Approval:</strong> Instant Approval.">
+                    <div class="card-icon">👤</div>
+                    <h4 data-translate="personalLoan">Personal Loan</h4>
+                    <p data-translate="personalLoanDesc">For your personal needs</p>
+                    <button class="card-btn" data-translate="applyNow"
+                        onclick="window.location.href='../loan types/personal lloan/index.html'">Apply Now</button>
+                </div>
+
+                <div class="card"
+                    data-details="<h5>Education Loan Details</h5><strong>Interest Rate:</strong> 7.0% p.a.<br><strong>Grace Period:</strong> 6 Months post-graduation<br><strong>Coverage:</strong> Up to 100%.">
+                    <div class="card-icon">🎓</div>
+                    <h4 data-translate="eduLoan">Education Loan</h4>
+                    <p data-translate="eduLoanDesc">Invest in your future</p>
+                    <button class="card-btn" data-translate="applyNow"
+                        onclick="window.location.href='../loan types/education loan/index.html'">Apply Now</button>
+                </div>
+
+                <div class="card"
+                    data-details="<h5>Vehicle Loan Details</h5><strong>Interest Rate:</strong> 9.0% p.a.<br><strong>Down Payment:</strong> Minimum 10%<br><strong>Max Tenure:</strong> 7 Years.">
+                    <div class="card-icon">🚗</div>
+                    <h4 data-translate="vehicleLoan">Vehicle Loan</h4>
+                    <p data-translate="vehicleLoanDesc">Drive your dream car</p>
+                    <button class="card-btn" data-translate="applyNow"
+                        onclick="window.location.href='../loan types/vehicle/index.html'">Apply Now</button>
+                </div>
+
+                <div class="card"
+                    data-details="<h5>Gold Loan Details</h5><strong>Interest Rate:</strong> 6.5% p.a.<br><strong>Disbursal:</strong> Under 30 minutes<br><strong>Purity:</strong> Accept 18K to 24K.">
+                    <div class="card-icon">💰</div>
+                    <h4 data-translate="goldLoan">Gold Loan</h4>
+                    <p data-translate="goldLoanDesc">Instant cash against gold</p>
+                    <button class="card-btn" data-translate="applyNow"
+                        onclick="window.location.href='../loan types/gold/index.html'">Apply Now</button>
+                </div>
+
+                <div class="card"
+                    data-details="<h5>Business Loan Details</h5><strong>Interest Rate:</strong> 11.5% p.a.<br><strong>Collateral:</strong> Free up to $50k<br><strong>Scale:</strong> Customized for growth.">
+                    <div class="card-icon">🏢</div>
+                    <h4 data-translate="businessLoan">Business Loan</h4>
+                    <p data-translate="businessLoanDesc">Grow your enterprise</p>
+                    <button class="card-btn" data-translate="applyNow"
+                        onclick="window.location.href='../loan types/business loan/index.html'">Apply Now</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        // Multi-Language System
+        const translations = {
+            en: {
+                appName: "LOAN ADDA", navDashboard: "Dashboard", navMyLoans: "My Loans", navSettings: "Settings",
+                specialOffers: "Special Offers", preApproved: "Get pre-approved in seconds!",
+                pageTitle: "Loan Categories",
+                homeLoan: "Home Loan", homeLoanDesc: "Build your dream home",
+                personalLoan: "Personal Loan", personalLoanDesc: "For your personal needs",
+                eduLoan: "Education Loan", eduLoanDesc: "Invest in your future",
+                vehicleLoan: "Vehicle Loan", vehicleLoanDesc: "Drive your dream car",
+                goldLoan: "Gold Loan", goldLoanDesc: "Instant cash against gold",
+                businessLoan: "Business Loan", businessLoanDesc: "Grow your enterprise",
+                applyNow: "Apply Now",
+                langLabel: "🌐 EN"
+            },
+            es: {
+                appName: "LOAN ADDA", navDashboard: "Panel", navMyLoans: "Mis Préstamos", navSettings: "Ajustes",
+                specialOffers: "Ofertas Especiales", preApproved: "¡Pre-aprobado en segundos!",
+                pageTitle: "Categorías de Préstamos",
+                homeLoan: "Hipotecario", homeLoanDesc: "Construye la casa de tus sueños",
+                personalLoan: "Préstamo Personal", personalLoanDesc: "Para tus necesidades",
+                eduLoan: "Préstamo Educativo", eduLoanDesc: "Invierte en tu futuro",
+                vehicleLoan: "Préstamo Vehículo", vehicleLoanDesc: "Conduce el coche de tus sueños",
+                goldLoan: "Préstamo Oro", goldLoanDesc: "Efectivo instantáneo por oro",
+                businessLoan: "Préstamo Comercial", businessLoanDesc: "Haz crecer tu empresa",
+                applyNow: "Aplicar Ahora",
+                langLabel: "🌐 ES"
+            },
+            hi: {
+                appName: "फिनसर्व", navDashboard: "डैशबोर्ड", navMyLoans: "मेरे ऋण", navSettings: "सेटिंग्स",
+                specialOffers: "विशेष प्रस्ताव", preApproved: "सेकंड में पूर्व-स्वीकृत हों!",
+                pageTitle: "ऋण श्रेणियाँ",
+                homeLoan: "होम लोन", homeLoanDesc: "अपने सपनों का घर बनाएं",
+                personalLoan: "व्यक्तिगत ऋण", personalLoanDesc: "आपकी व्यक्तिगत जरूरतों के लिए",
+                eduLoan: "शिक्षा ऋण", eduLoanDesc: "अपने भविष्य में निवेश करें",
+                vehicleLoan: "वाहन ऋण", vehicleLoanDesc: "अपने सपनों की कार चलाएं",
+                goldLoan: "गोल्ड लोन", goldLoanDesc: "सोने के बदले तत्काल नकदी",
+                businessLoan: "व्यापार ऋण", businessLoanDesc: "अपना उद्यम बढ़ाएँ",
+                applyNow: "अभी आवेदन करें",
+                langLabel: "🌐 HI"
+            },
+            kn: {
+                appName: "ಫಿನ್‌ಸರ್ವ್", navDashboard: "ಡ್ಯಾಶ್‌ಬೋರ್ಡ್", navMyLoans: "ನನ್ನ ಸಾಲಗಳು", navSettings: "ಸೆಟ್ಟಿಂಗ್‌ಗಳು",
+                specialOffers: "ವಿಶೇಷ ಕೊಡುಗೆಗಳು", preApproved: "ಕ್ಷಣಗಳಲ್ಲಿ ಪೂರ್ವ-ಅನುಮೋದನೆ ಪಡೆಯಿರಿ!",
+                pageTitle: "ಸಾಲದ ವಿಭಾಗಗಳು",
+                homeLoan: "ಗೃಹ ಸಾಲ", homeLoanDesc: "ನಿಮ್ಮ ಕನಸಿನ ಮನೆಯನ್ನು ನಿರ್ಮಿಸಿ",
+                personalLoan: "ವೈಯಕ್ತಿಕ ಸಾಲ", personalLoanDesc: "ನಿಮ್ಮ ವೈಯಕ್ತಿಕ ಅಗತ್ಯಗಳಿಗಾಗಿ",
+                eduLoan: "ಶಿಕ್ಷಣ ಸಾಲ", eduLoanDesc: "ನಿಮ್ಮ ಭವಿಷ್ಯದಲ್ಲಿ ಹೂಡಿಕೆ ಮಾಡಿ",
+                vehicleLoan: "ವಾಹನ ಸಾಲ", vehicleLoanDesc: "ನಿಮ್ಮ ಕನಸಿನ ಕಾರನ್ನು ಚಲಾಯಿಸಿ",
+                goldLoan: "ಚಿನ್ನದ ಸಾಲ", goldLoanDesc: "ಚಿನ್ನದ ಮೇಲೆ ದಿಢೀರ್ ನಗದು",
+                businessLoan: "ವ್ಯಾಪಾರ ಸಾಲ", businessLoanDesc: "ನಿಮ್ಮ ಉದ್ಯಮವನ್ನು ಬೆಳೆಸಿ",
+                applyNow: "ಅರ್ಜಿ ಸಲ್ಲಿಸಿ",
+                langLabel: "🌐 KN"
+            },
+            ta: {
+                appName: "LOAN ADDA", navDashboard: "முகப்பு", navMyLoans: "என் கடன்கள்", navSettings: "அமைப்புகள்",
+                specialOffers: "சிறப்பு சலுகைகள்", preApproved: "நொடிகளில் முன்-அனுமதி பெறுங்கள்!",
+                pageTitle: "கடன் வகைகள்",
+                homeLoan: "வீட்டு கடன்", homeLoanDesc: "உங்கள் கனவு இல்லத்தை உருவாக்குங்கள்",
+                personalLoan: "தனிநபர் கடன்", personalLoanDesc: "உங்கள் தனிப்பட்ட தேவைகளுக்கு",
+                eduLoan: "கல்வி கடன்", eduLoanDesc: "உங்கள் எதிர்காலத்தில் முதலீடு செய்யுங்கள்",
+                vehicleLoan: "வாகன கடன்", vehicleLoanDesc: "உங்கள் கனவு காரை ஓட்டுங்கள்",
+                goldLoan: "தங்கக் கடன்", goldLoanDesc: "தங்கத்தின் மீது உடனடி பணம்",
+                businessLoan: "வணிக கடன்", businessLoanDesc: "உங்கள் தொழிலை வளர்த்துக் கொள்ளுங்கள்",
+                applyNow: "விண்ணப்பிக்கவும்",
+                langLabel: "🌐 TA"
+            },
+            te: {
+                appName: "LOAN ADDA", navDashboard: "డాష్‌బోర్డ్", navMyLoans: "నా రుణాలు", navSettings: "సెట్టింగ్‌లు",
+                specialOffers: "ప్రత్యేక ఆఫర్‌లు", preApproved: "క్షణాల్లో ప్రీ-అప్రూవల్ పొందండి!",
+                pageTitle: "రుణ వర్గాలు",
+                homeLoan: "గృహ రుణం", homeLoanDesc: "మీ కలల ఇంటిని నిర్మించండి",
+                personalLoan: "వ్యక్తిగత రుణం", personalLoanDesc: "మీ వ్యక్తిగత అవసరాల కోసం",
+                eduLoan: "విద్యా రుణం", eduLoanDesc: "మీ భవిష్యత్తులో పెట్టుబడి పెట్టండి",
+                vehicleLoan: "వాహన రుణం", vehicleLoanDesc: "మీ కలల కారును నడపండి",
+                goldLoan: "బంగారు రుణం", goldLoanDesc: "బంగారంపై తక్షణ నగదు",
+                businessLoan: "వ్యాపార రుణం", businessLoanDesc: "మీ వ్యాపారాన్ని అభివృద్ధి చేసుకోండి",
+                applyNow: "దరఖాస్తు చేయండి",
+                langLabel: "🌐 TE"
+            },
+            fr: {
+                appName: "LOAN ADDA", navDashboard: "Tableau de Bord", navMyLoans: "Mes Prêts", navSettings: "Paramètres",
+                specialOffers: "Offres Spéciales", preApproved: "Pré-approuvé en quelques secondes !",
+                pageTitle: "Catégories de Prêts",
+                homeLoan: "Prêt Immobilier", homeLoanDesc: "Construisez la maison de vos rêves",
+                personalLoan: "Prêt Personnel", personalLoanDesc: "Pour vos besoins personnels",
+                eduLoan: "Prêt Étudiant", eduLoanDesc: "Investissez dans votre avenir",
+                vehicleLoan: "Prêt Auto", vehicleLoanDesc: "Conduisez la voiture de vos rêves",
+                goldLoan: "Prêt sur Or", goldLoanDesc: "Argent instantané contre votre or",
+                businessLoan: "Prêt Commercial", businessLoanDesc: "Développez votre entreprise",
+                applyNow: "Postuler",
+                langLabel: "🌐 FR"
+            },
+            de: {
+                appName: "LOAN ADDA", navDashboard: "Dashboard", navMyLoans: "Meine Kredite", navSettings: "Einstellungen",
+                specialOffers: "Sonderangebote", preApproved: "In Sekundenschnelle genehmigt!",
+                pageTitle: "Kreditkategorien",
+                homeLoan: "Baudarlehen", homeLoanDesc: "Bauen Sie Ihr Traumhaus",
+                personalLoan: "Privatkredit", personalLoanDesc: "Für Ihre persönlichen Bedürfnisse",
+                eduLoan: "Studienkredit", eduLoanDesc: "Investieren Sie in Ihre Zukunft",
+                vehicleLoan: "Autokredit", vehicleLoanDesc: "Fahren Sie Ihr Traumauto",
+                goldLoan: "Goldkredit", goldLoanDesc: "Sofort Bargeld gegen Gold",
+                businessLoan: "Geschäftskredit", businessLoanDesc: "Erweitern Sie Ihr Unternehmen",
+                applyNow: "Beantragen",
+                langLabel: "🌐 DE"
+            }
+        };
+
+        function changeLanguage(langCode) {
+            document.getElementById('current-lang').innerText = translations[langCode].langLabel;
+
+            const elements = document.querySelectorAll('[data-translate]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-translate');
+                el.innerText = translations[langCode][key];
+            });
+        }
+
+        // Interactive Loan Details Popup Logic
+        const tooltip = document.createElement('div');
+        tooltip.className = 'custom-tooltip';
+        document.body.appendChild(tooltip);
+
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                if (card.getAttribute('data-details')) {
+                    tooltip.innerHTML = card.getAttribute('data-details');
+                    tooltip.style.left = (e.pageX + 15) + 'px';
+                    tooltip.style.top = (e.pageY + 15) + 'px';
+                    tooltip.style.opacity = '1';
+                    tooltip.style.visibility = 'visible';
+                }
+            });
+            card.addEventListener('mouseleave', () => {
+                tooltip.style.opacity = '0';
+                tooltip.style.visibility = 'hidden';
+            });
+        });
+
+        // Close profile dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            const profile = document.querySelector('.profile');
+            if (profile && !profile.contains(e.target)) {
+                profile.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+
+</html>

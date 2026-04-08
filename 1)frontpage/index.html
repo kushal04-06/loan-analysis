@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOAN ADDA - Optimize Your Investments</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        /* Intro Animation Overlay */
+        #intro-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #09090b;
+            background-image:
+                radial-gradient(at 0% 0%, rgba(15, 23, 42, 1) 0, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(30, 27, 75, 1) 0, transparent 50%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease;
+        }
+
+        #intro-text {
+            font-size: 60px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-align: center;
+            color: #86efac;
+            text-shadow: 0 0 20px rgba(134, 239, 172, 0.3);
+            margin: 0;
+        }
+
+        #intro-text span {
+            display: inline-block;
+            opacity: 0;
+        }
+
+        .from-top {
+            transform: translateY(-100px);
+        }
+
+        .from-bottom {
+            transform: translateY(100px);
+        }
+
+        .from-left {
+            transform: translateX(-100px);
+        }
+
+        .from-right {
+            transform: translateX(100px);
+        }
+
+        .intro-animate {
+            animation: introShow 0.6s forwards cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes introShow {
+            to {
+                opacity: 1;
+                transform: translate(0, 0);
+            }
+        }
+
+        :root {
+            --bg-color: #09090b;
+            /* Zinc 950 for deeper contrast */
+            --accent-green: #86efac;
+            --accent-green-bright: #4ade80;
+            --card-bg: rgba(30, 41, 59, 0.4);
+            --card-border: rgba(255, 255, 255, 0.05);
+            --text-light: #f8fafc;
+            --text-muted: #94a3b8;
+            --icon-bg: #86efac;
+            --icon-color: #020617;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image:
+                radial-gradient(at 0% 0%, rgba(15, 23, 42, 1) 0, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(30, 27, 75, 1) 0, transparent 50%);
+            color: var(--text-light);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* Animated Background Elements */
+        .bg-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .blob {
+            position: absolute;
+            filter: blur(80px);
+            opacity: 0.5;
+            border-radius: 50%;
+            animation: float 12s infinite ease-in-out alternate;
+        }
+
+        .blob-1 {
+            top: -20%;
+            left: -10%;
+            width: 70vw;
+            height: 70vw;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.45) 0%, transparent 60%);
+            animation-duration: 20s;
+        }
+
+        .blob-2 {
+            bottom: -20%;
+            right: -10%;
+            width: 60vw;
+            height: 60vw;
+            background: radial-gradient(circle, rgba(236, 72, 153, 0.4) 0%, transparent 60%);
+            animation-duration: 18s;
+            animation-delay: -5s;
+        }
+
+        .blob-3 {
+            top: 20%;
+            left: 30%;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.35) 0%, transparent 60%);
+            animation-duration: 22s;
+            animation-delay: -10s;
+        }
+
+        .blob-4 {
+            bottom: 10%;
+            left: 10%;
+            width: 40vw;
+            height: 40vw;
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.3) 0%, transparent 60%);
+            animation-duration: 25s;
+            animation-delay: -15s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            50% {
+                transform: translate(3%, -5%) scale(1.05);
+            }
+
+            100% {
+                transform: translate(-3%, 5%) scale(0.95);
+            }
+        }
+
+        /* Container */
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 40px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Navbar */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            flex-shrink: 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 28px;
+            font-weight: 800;
+            text-decoration: none;
+            background: linear-gradient(135deg, #4ade80 0%, #3b82f6 50%, #a855f7 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: logoShine 4s linear infinite;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        @keyframes logoShine {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+        .logo svg {
+            width: 28px;
+            height: 28px;
+            stroke: var(--accent-green-bright);
+            stroke-width: 2;
+            fill: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 35px;
+            margin-left: auto;
+            margin-right: 40px;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 400;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-green-bright);
+        }
+
+        .nav-links a::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-top: 15px;
+            background: rgba(15, 23, 42, 0.9);
+            color: var(--accent-green-bright);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            white-space: normal;
+            width: max-content;
+            max-width: 250px;
+            text-align: center;
+            line-height: 1.4;
+            border: 1px solid var(--card-border);
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .nav-links a:hover::after {
+            opacity: 1;
+            visibility: visible;
+            margin-top: 8px;
+        }
+
+        .top-card p {
+            min-height: 21px;
+        }
+
+        .flip-text {
+            display: inline-block;
+            transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55), opacity 0.6s ease;
+            transform-origin: center bottom;
+            transform: rotateX(0deg);
+            opacity: 1;
+        }
+
+        .flip-text.flipped {
+            transform: rotateX(90deg);
+            opacity: 0;
+        }
+
+        #typing-text::after {
+            content: '|';
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        .btn-get-started {
+            background-color: #bef264;
+            color: var(--icon-color);
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 15px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(190, 242, 100, 0.2);
+        }
+
+        .btn-get-started:hover {
+            background-color: #a3e635;
+            box-shadow: 0 6px 20px rgba(163, 230, 53, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            flex: 1;
+            align-items: center;
+            padding-bottom: 20px;
+            min-height: 0;
+        }
+
+        /* Left Column */
+        .hero-left {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .hero-left h1 {
+            font-size: 50px;
+            line-height: 1.1;
+            font-weight: 700;
+            margin-bottom: 30px;
+            letter-spacing: -1px;
+            animation: slideUp 0.8s ease forwards;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .hero-left h1 span {
+            color: var(--accent-green-bright);
+        }
+
+        .features-grid {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            /* slightly stronger border */
+            border-radius: 24px;
+            padding: 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px 25px;
+            backdrop-filter: blur(10px);
+            animation: fadeIn 1s ease 0.3s forwards;
+            opacity: 0;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-item {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .icon-box {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #bef264, #4ade80);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 20px rgba(74, 222, 128, 0.2);
+        }
+
+        .icon-box svg {
+            width: 22px;
+            height: 22px;
+            stroke: var(--icon-color);
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .feature-item h3 {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .feature-item p {
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* Right Column */
+        .hero-right {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            animation: slideLeft 1s ease 0.5s forwards;
+            opacity: 0;
+            height: 100%;
+            justify-content: center;
+        }
+
+        .top-card {
+            background: rgba(14, 25, 43, 0.7);
+            border: 1px solid rgba(74, 222, 128, 0.15);
+            border-radius: 24px;
+            padding: 40px 30px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2) inset;
+        }
+
+        /* Subtle glowing corners or edges for top card to match image */
+        .top-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(74, 222, 128, 0.05) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .top-card .sparkle {
+            margin-bottom: 20px;
+            color: var(--accent-green-bright);
+        }
+
+        .top-card .sparkle svg {
+            width: 32px;
+            height: 32px;
+            stroke: var(--accent-green-bright);
+            stroke-width: 1.5;
+            fill: none;
+        }
+
+        .top-card h2 {
+            font-size: 30px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+            min-height: 45px;
+        }
+
+        .top-card p {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .bottom-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            position: relative;
+            overflow: hidden;
+            flex: 1;
+            /* Match remaining space */
+            min-height: 220px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .bottom-card img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+            opacity: 0.9;
+            transition: opacity 0.5s ease;
+            filter: brightness(0.8);
+        }
+
+        .bottom-card:hover img {
+            opacity: 1;
+            filter: brightness(0.9);
+        }
+
+        /* Overlay gradient for bottom card text legibility if needed */
+        .bottom-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .slider-controls {
+            position: relative;
+            z-index: 3;
+            display: flex;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            width: 32px;
+            border-radius: 4px;
+            background: #bef264;
+        }
+
+        /* Animations */
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideLeft {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Made with Emergent tag */
+        .made-with {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 30px;
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            z-index: 1000;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+        }
+
+        .made-with svg {
+            fill: white;
+            width: 14px;
+            height: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-left h1 {
+                font-size: 48px;
+            }
+
+            .bottom-card {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Intro Screen -->
+    <div id="intro-screen">
+        <h1 id="intro-text"></h1>
+    </div>
+
+    <!-- Animated Background -->
+    <div class="bg-elements">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
+    <div class="container">
+        <!-- Navigation -->
+        <nav>
+            <a href="#" class="logo">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z"></path>
+                </svg>
+                LOAN ADDA
+            </a>
+
+            <div class="nav-links">
+                <a href="#"
+                    data-tooltip="Explore intelligent loan features, including auto, home, and personal loans tailored to your needs.">Features</a>
+                <a href="#"
+                    data-tooltip="Learn more about our AI-powered loan prediction system that quickly analyzes your eligibility.">About</a>
+                <a href="#" data-tooltip="Need help? Contact our support team directly. Call us at: +91 7022234282
+                ">Support</a>
+            </div>
+
+            <a href="../2)login page/login.html" class="btn-get-started">Check Your Loan Eligibility</a>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="hero">
+
+            <!-- Left Side -->
+            <div class="hero-left">
+                <h1>Optimize Your <br> <span>Investments And</span> <br> Loans Effortlessly</h1>
+
+                <div class="features-grid">
+
+                    <div class="feature-item">
+                        <div class="icon-box">
+                            <svg viewBox="0 0 24 24">
+                                <line x1="12" y1="1" x2="12" y2="23"></line>
+                                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                            </svg>
+                        </div>
+                        <h3>Personal Loan</h3>
+                        <p>Fast, flexible funds for life's unexpected moments with zero hidden fees.</p>
+                    </div>
+
+                    <div class="feature-item">
+                        <div class="icon-box">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                            </svg>
+                        </div>
+                        <h3>Home Loan</h3>
+                        <p>Unlock the door to your dream home with unmatched, low mortgage rates.</p>
+                    </div>
+
+                    <div class="feature-item">
+                        <div class="icon-box">
+                            <svg viewBox="0 0 24 24">
+                                <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+                                <line x1="9" y1="22" x2="9" y2="22"></line>
+                                <line x1="15" y1="22" x2="15" y2="22"></line>
+                                <line x1="12" y1="6" x2="12" y2="6.01"></line>
+                                <line x1="12" y1="10" x2="12" y2="10.01"></line>
+                                <line x1="12" y1="14" x2="12" y2="14.01"></line>
+                                <line x1="12" y1="18" x2="12" y2="18.01"></line>
+                            </svg>
+                        </div>
+                        <h3>Business Loan</h3>
+                        <p>Scale your empire instantly with lightning-fast commercial capital.</p>
+                    </div>
+
+                    <div class="feature-item">
+                        <div class="icon-box">
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M14 16H9m10 0h3v-3.15a1 1 0 0 0-.84-.99L16 11l-2.7-3.6a2 2 0 0 0-1.6-.8H5a2 2 0 0 0-2 2v7h2m4 0a2 2 0 1 1-4 0m14 0a2 2 0 1 1-4 0">
+                                </path>
+                                <circle cx="7" cy="16" r="2"></circle>
+                                <circle cx="17" cy="16" r="2"></circle>
+                            </svg>
+                        </div>
+                        <h3>Auto Loan</h3>
+                        <p>Drive off in style with instant pre-approvals and zero down required.</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Right Side -->
+            <div class="hero-right">
+
+                <div class="top-card">
+                    <div class="sparkle">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z"></path>
+                            <circle cx="6" cy="6" r="1.5" fill="#4ade80" />
+                            <circle cx="18" cy="18" r="2" fill="#4ade80" />
+                            <circle cx="20" cy="5" r="1.5" fill="#4ade80" />
+                        </svg>
+                    </div>
+                    <h2 id="dynamic-heading">Manage Your Loans Smarter</h2>
+                    <p id="typing-text"></p>
+                </div>
+
+                <div class="bottom-card">
+                    <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1000&q=80"
+                        alt="Loan Growth Analytics" id="slider-img">
+                    <div class="slider-controls">
+                        <div class="dot active"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+    </div>
+
+    <script>
+        // Typing Animation
+        const headingsToType = [
+            "Manage Your Loans Smarter",
+            "Build Wealth Faster",
+            "Save on Interest",
+            "Instant Approvals",
+            "Flexible Financing"
+        ];
+        const textsToType = [
+            "Smart Loan & Investment Assistant",
+            "Your journey to financial freedom starts here",
+            "Better rates with AI-driven insights",
+            "Get pre-approved in seconds, not days",
+            "Seamless auto, home, and business financing"
+        ];
+        const headingElement = document.getElementById('dynamic-heading');
+        const typingElement = document.getElementById('typing-text');
+
+        headingElement.className = 'flip-text';
+
+        let currentTextIndex = 0;
+        let typingIndex = 0;
+        let isDeleting = false;
+
+        headingElement.innerHTML = headingsToType[0];
+
+        function type() {
+            const currentSubText = textsToType[currentTextIndex];
+
+            if (isDeleting) {
+                // When we start deleting, flip the heading out
+                if (typingIndex === currentSubText.length) {
+                    headingElement.classList.add('flipped');
+                }
+
+                // Remove a character
+                typingElement.innerHTML = currentSubText.substring(0, typingIndex - 1);
+                typingIndex--;
+
+                if (typingIndex === 0) {
+                    isDeleting = false;
+                    currentTextIndex = (currentTextIndex + 1) % textsToType.length;
+
+                    // Update and flip in new heading
+                    headingElement.innerHTML = headingsToType[currentTextIndex];
+                    headingElement.classList.remove('flipped');
+
+                    setTimeout(type, 500); // Wait before typing new word
+                } else {
+                    setTimeout(type, 30); // Fast deletion speed
+                }
+            } else {
+                // Add a character
+                typingElement.innerHTML = currentSubText.substring(0, typingIndex + 1);
+                typingIndex++;
+
+                if (typingIndex === currentSubText.length) {
+                    isDeleting = true;
+                    // Wait after completing the sentence before deleting
+                    setTimeout(type, 3000);
+                } else {
+                    setTimeout(type, 80); // Typing speed
+                }
+            }
+        }
+
+        setTimeout(type, 1000);
+
+        // Automated Image Slider
+        const dots = document.querySelectorAll('.dot');
+        const img = document.getElementById('slider-img');
+        let currentSlide = 0;
+        const totalSlides = dots.length;
+
+        const sliderPhotos = [
+            "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1000&q=80",
+            "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1000&q=80",
+            "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1000&q=80",
+            "https://images.unsplash.com/photo-1579532537598-459ecdaf39cc?auto=format&fit=crop&w=1000&q=80",
+            "https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?auto=format&fit=crop&w=1000&q=80",
+            "https://images.unsplash.com/photo-1642543492481-44e81e3914a7?auto=format&fit=crop&w=1000&q=80",
+            "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=1000&q=80",
+            "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1000&q=80",
+            "https://images.unsplash.com/photo-1535320903710-d993d3d77d29?auto=format&fit=crop&w=1000&q=80"
+        ];
+
+        function updateSlider(index) {
+            dots.forEach(d => d.classList.remove('active'));
+            dots[index].classList.add('active');
+
+            img.style.opacity = '0.5';
+            setTimeout(() => {
+                img.src = sliderPhotos[index];
+                img.style.filter = 'brightness(0.9)';
+                img.style.opacity = '1';
+            }, 300);
+        }
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', function () {
+                currentSlide = index;
+                updateSlider(currentSlide);
+                resetAutoSlide();
+            });
+        });
+
+        let slideInterval = setInterval(nextSlide, 6000);
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateSlider(currentSlide);
+        }
+
+        function resetAutoSlide() {
+            clearInterval(slideInterval);
+            slideInterval = setInterval(nextSlide, 6000);
+        }
+
+        // Intro Animation Logic
+        const introTextString = "LOAN ADDA";
+        const introContainer = document.getElementById("intro-text");
+        const introScreen = document.getElementById("intro-screen");
+
+        const introDirections = ["from-top", "from-bottom", "from-left", "from-right"];
+
+        introTextString.split("").forEach((char, index) => {
+            const span = document.createElement("span");
+            if (char === " ") {
+                span.innerHTML = "&nbsp;"; // preserve space
+            } else {
+                span.textContent = char;
+            }
+
+            // random direction
+            const randomDir = introDirections[Math.floor(Math.random() * introDirections.length)];
+            span.classList.add(randomDir);
+
+            introContainer.appendChild(span);
+
+            // delay animation
+            setTimeout(() => {
+                span.classList.add("intro-animate");
+            }, index * 100);
+        });
+
+        // Calculate total animation time
+        const totalIntroAnimationTime = introTextString.length * 100 + 600;
+
+        // Hide intro screen after animation
+        setTimeout(() => {
+            introScreen.style.opacity = "0";
+            setTimeout(() => {
+                introScreen.style.display = "none";
+            }, 800);
+        }, totalIntroAnimationTime + 1000);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Eligibility Result | LOAN ADDA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js for glowing dashboard -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Intro Animation Overlay */
+        #intro-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #09090b;
+            background-image:
+                radial-gradient(at 0% 0%, rgba(15, 23, 42, 1) 0, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(30, 27, 75, 1) 0, transparent 50%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease;
+        }
+
+        #intro-text {
+            font-size: 60px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-align: center;
+            color: #86efac;
+            text-shadow: 0 0 20px rgba(134, 239, 172, 0.3);
+            margin: 0;
+        }
+
+        #intro-text span {
+            display: inline-block;
+            opacity: 0;
+        }
+
+        .from-top {
+            transform: translateY(-100px);
+        }
+
+        .from-bottom {
+            transform: translateY(100px);
+        }
+
+        .from-left {
+            transform: translateX(-100px);
+        }
+
+        .from-right {
+            transform: translateX(100px);
+        }
+
+        .intro-animate {
+            animation: introShow 0.6s forwards cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes introShow {
+            to {
+                opacity: 1;
+                transform: translate(0, 0);
+            }
+        }
+
+        :root {
+            --bg-color: #09090b;
+            --accent-green: #86efac;
+            --accent-green-bright: #4ade80;
+            --card-bg: rgba(30, 41, 59, 0.4);
+            --card-border: rgba(255, 255, 255, 0.05);
+            --text-light: #f8fafc;
+            --text-muted: #94a3b8;
+            --icon-bg: #86efac;
+            --icon-color: #020617;
+            --radius-xl: 24px;
+            --radius-lg: 16px;
+            --radius-md: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image:
+                radial-gradient(at 0% 0%, rgba(15, 23, 42, 1) 0, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(30, 27, 75, 1) 0, transparent 50%);
+            color: var(--text-light);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: 50px 20px;
+            position: relative;
+            /* Scrollable natively */
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background Elements matching Frontpage */
+        .bg-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .blob {
+            position: absolute;
+            filter: blur(80px);
+            opacity: 0.4;
+            border-radius: 50%;
+            animation: float 12s infinite ease-in-out alternate;
+        }
+
+        .blob-1 {
+            top: -20%;
+            left: -10%;
+            width: 70vw;
+            height: 70vw;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.45) 0%, transparent 60%);
+            animation-duration: 20s;
+        }
+
+        .blob-2 {
+            bottom: -20%;
+            right: -10%;
+            width: 60vw;
+            height: 60vw;
+            background: radial-gradient(circle, rgba(236, 72, 153, 0.4) 0%, transparent 60%);
+            animation-duration: 18s;
+            animation-delay: -5s;
+        }
+
+        .blob-3 {
+            top: 20%;
+            left: 30%;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.35) 0%, transparent 60%);
+            animation-duration: 22s;
+            animation-delay: -10s;
+        }
+
+        .blob-4 {
+            bottom: 10%;
+            left: 10%;
+            width: 40vw;
+            height: 40vw;
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.3) 0%, transparent 60%);
+            animation-duration: 25s;
+            animation-delay: -15s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            50% {
+                transform: translate(3%, -5%) scale(1.05);
+            }
+
+            100% {
+                transform: translate(-3%, 5%) scale(0.95);
+            }
+        }
+
+        /* ---------------- Floating Theme Effects ---------------- */
+        .effect-container {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .floating-icon {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.05);
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.1));
+            animation: floatup linear infinite;
+        }
+
+        .icon-1 {
+            left: 5%;
+            bottom: -80px;
+            font-size: 3rem;
+            animation-duration: 14s;
+            animation-delay: 0s;
+        }
+
+        .icon-2 {
+            left: 15%;
+            bottom: -80px;
+            font-size: 2rem;
+            animation-duration: 17s;
+            animation-delay: 4s;
+        }
+
+        .icon-3 {
+            left: 25%;
+            bottom: -80px;
+            font-size: 4rem;
+            animation-duration: 20s;
+            animation-delay: 2s;
+        }
+
+        .icon-4 {
+            left: 35%;
+            bottom: -80px;
+            font-size: 2.5rem;
+            animation-duration: 15s;
+            animation-delay: 8s;
+        }
+
+        .icon-5 {
+            left: 45%;
+            bottom: -80px;
+            font-size: 3.5rem;
+            animation-duration: 24s;
+            animation-delay: 3s;
+        }
+
+        .icon-6 {
+            left: 55%;
+            bottom: -80px;
+            font-size: 2.2rem;
+            animation-duration: 18s;
+            animation-delay: 12s;
+        }
+
+        .icon-7 {
+            left: 65%;
+            bottom: -80px;
+            font-size: 3.2rem;
+            animation-duration: 19s;
+            animation-delay: 6s;
+        }
+
+        .icon-8 {
+            left: 75%;
+            bottom: -80px;
+            font-size: 1.8rem;
+            animation-duration: 15s;
+            animation-delay: 1s;
+        }
+
+        .icon-9 {
+            left: 85%;
+            bottom: -80px;
+            font-size: 4.5rem;
+            animation-duration: 23s;
+            animation-delay: 10s;
+        }
+
+        .icon-10 {
+            left: 95%;
+            bottom: -80px;
+            font-size: 2.7rem;
+            animation-duration: 16s;
+            animation-delay: 5s;
+        }
+
+        .icon-11 {
+            left: 10%;
+            bottom: -80px;
+            font-size: 2rem;
+            animation-duration: 19s;
+            animation-delay: 15s;
+        }
+
+        .icon-12 {
+            left: 30%;
+            bottom: -80px;
+            font-size: 3.5rem;
+            animation-duration: 24s;
+            animation-delay: 18s;
+        }
+
+        .icon-13 {
+            left: 50%;
+            bottom: -80px;
+            font-size: 2.5rem;
+            animation-duration: 17s;
+            animation-delay: 11s;
+        }
+
+        .icon-14 {
+            left: 70%;
+            bottom: -80px;
+            font-size: 4rem;
+            animation-duration: 25s;
+            animation-delay: 16s;
+        }
+
+        .icon-15 {
+            left: 90%;
+            bottom: -80px;
+            font-size: 3rem;
+            animation-duration: 21s;
+            animation-delay: 8s;
+        }
+
+        @keyframes floatup {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+
+            20% {
+                opacity: 1;
+            }
+
+            80% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            max-width: 680px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            z-index: 1;
+        }
+
+        /* Top Bar */
+        .header {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #4ade80 0%, #3b82f6 50%, #a855f7 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: var(--text-muted);
+            font-size: 15px;
+        }
+
+        /* Generic Card Styles for Glassmorphism */
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius-xl);
+            padding: 30px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-light);
+        }
+
+        .card-title svg {
+            stroke: var(--accent-green-bright);
+            width: 22px;
+            height: 22px;
+        }
+
+        /* Score Section */
+        .score-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            background: rgba(14, 25, 43, 0.6);
+            border: 1px solid rgba(74, 222, 128, 0.15);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2) inset;
+        }
+
+        .score-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(74, 222, 128, 0.08) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .circular-progress {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            margin-bottom: 24px;
+        }
+
+        .circular-progress svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+            filter: drop-shadow(0 0 8px rgba(74, 222, 128, 0.4));
+        }
+
+        .circular-progress circle {
+            fill: none;
+            stroke-width: 12;
+            stroke-linecap: round;
+        }
+
+        .bg-circle {
+            stroke: rgba(255, 255, 255, 0.05);
+        }
+
+        .progress-circle {
+            stroke: var(--accent-green-bright);
+            stroke-dasharray: 440;
+            stroke-dashoffset: 96.8;
+            /* 78% */
+            animation: fillProgress 1.5s ease-out forwards;
+        }
+
+        @keyframes fillProgress {
+            from {
+                stroke-dashoffset: 440;
+            }
+
+            to {
+                stroke-dashoffset: 96.8;
+            }
+        }
+
+        .score-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .score-value {
+            font-size: 40px;
+            font-weight: 700;
+            color: var(--text-light);
+            line-height: 1;
+        }
+
+        .score-total {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .approval-badge {
+            background: rgba(74, 222, 128, 0.1);
+            color: var(--accent-green-bright);
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            border: 1px solid rgba(74, 222, 128, 0.3);
+            box-shadow: 0 0 15px rgba(74, 222, 128, 0.1);
+        }
+
+        .encouragement {
+            color: var(--text-muted);
+            font-size: 15px;
+        }
+
+        /* Icon Boxes */
+        .icon-box {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .icon-box.green {
+            background: linear-gradient(135deg, #bef264, #4ade80);
+            box-shadow: 0 8px 20px rgba(74, 222, 128, 0.15);
+        }
+
+        .icon-box.yellow {
+            background: linear-gradient(135deg, #fde047, #f59e0b);
+            box-shadow: 0 8px 20px rgba(245, 158, 11, 0.15);
+        }
+
+        .icon-box.blue {
+            background: linear-gradient(135deg, #93c5fd, #3b82f6);
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.15);
+        }
+
+        .icon-box svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--icon-color);
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* Lists */
+        .reasons-list,
+        .improvements-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .reason-item,
+        .improvement-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 16px;
+            border-radius: var(--radius-md);
+            background: rgba(15, 23, 42, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .reason-item:hover,
+        .improvement-item:hover {
+            transform: translateX(5px);
+            background: rgba(15, 23, 42, 0.6);
+        }
+
+        .item-content h4 {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-light);
+            margin-bottom: 6px;
+        }
+
+        .item-content p {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* What if Analysis */
+        .what-if-card {
+            background: rgba(30, 58, 138, 0.2);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .what-if-card .card-title svg {
+            stroke: #60a5fa;
+        }
+
+        .what-if-content {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .what-if-text {
+            flex: 1;
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 1.6;
+            color: var(--text-light);
+        }
+
+        .what-if-text strong {
+            color: #60a5fa;
+        }
+
+        .what-if-score {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(15, 23, 42, 0.8);
+            padding: 16px 24px;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            min-width: 120px;
+        }
+
+        .what-if-score span {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .what-if-score strong {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-muted);
+            line-height: 1;
+        }
+
+        .what-if-score strong .new-val {
+            color: #4ade80;
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        /* --- Dashboard Charts Styles --- */
+        .dashboard-section {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .summary-box {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .summary-row:last-child {
+            border-bottom: none;
+        }
+
+        .summary-label {
+            color: #cbd5e1;
+            font-size: 14px;
+        }
+
+        .summary-value {
+            color: #fff;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .metric-good {
+            color: #4ade80;
+            text-shadow: 0 0 8px rgba(74, 222, 128, 0.5);
+        }
+
+        .metric-average {
+            color: #fbbf24;
+            text-shadow: 0 0 8px rgba(251, 191, 36, 0.5);
+        }
+
+        .metric-poor {
+            color: #f87171;
+            text-shadow: 0 0 8px rgba(248, 113, 113, 0.5);
+        }
+
+        .chart-dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .chart-dashboard {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-xl);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .chart-card.full-width {
+            grid-column: 1 / -1;
+            align-items: stretch;
+            height: 260px;
+        }
+
+        .chart-title {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #f8fafc;
+        }
+
+        .chart-value {
+            position: absolute;
+            top: 40px;
+            left: 20px;
+            font-size: 22px;
+            font-weight: 600;
+            color: #4ade80;
+            text-shadow: 0 0 10px rgba(74, 222, 128, 0.4);
+        }
+
+        .donut-container {
+            width: 140px;
+            height: 140px;
+            margin-top: 50px;
+        }
+
+        .area-container {
+            width: 100%;
+            height: 100%;
+            margin-top: 40px;
+            position: relative;
+        }
+
+        /* Actions Wrapper */
+        .actions-wrapper {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px auto 30px;
+            width: fit-content;
+        }
+
+        .action-btn-box {
+            background-color: #bef264;
+            color: var(--icon-color);
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 15px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(190, 242, 100, 0.2);
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-family: inherit;
+        }
+
+        .action-btn-box:hover {
+            background-color: #a3e635;
+            box-shadow: 0 6px 20px rgba(163, 230, 53, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Secondary style for 'Previous Step' if we want it less prominent, but let's keep it consistent */
+        .action-btn-box.secondary {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: none;
+        }
+
+        .action-btn-box.secondary:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        @media print {
+            * {
+                color: black !important;
+                text-shadow: none !important;
+                box-shadow: none !important;
+                -webkit-text-fill-color: initial !important;
+            }
+            html, body {
+                background: white !important;
+                height: auto !important;
+                min-height: auto !important;
+                overflow: visible !important;
+                display: block !important;
+            }
+            .bg-elements, .effect-container, .actions-wrapper, #intro-screen {
+                display: none !important;
+            }
+            .container {
+                max-width: 100% !important;
+                width: 100% !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                display: block !important;
+            }
+            .card {
+                border: 1px solid #ccc !important;
+                background: white !important;
+                break-inside: avoid;
+                page-break-inside: avoid;
+                margin-bottom: 20px !important;
+            }
+            .chart-dashboard {
+                display: block !important;
+            }
+            .chart-card {
+                width: 100% !important;
+                margin-bottom: 20px !important;
+                display: block !important;
+                height: auto !important;
+                page-break-inside: avoid;
+            }
+            .donut-container {
+                margin: 0 auto !important;
+            }
+            .area-container {
+                height: 250px !important;
+            }
+            canvas {
+                max-width: 100% !important;
+                height: auto !important;
+                filter: invert(1) hue-rotate(180deg);
+            }
+            /* Explicitly resetting some elements so they show up */
+            .approval-badge, .icon-box, .what-if-score {
+                border: 1px solid #aaa !important;
+            }
+            .progress-circle {
+                stroke: black !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Intro Screen -->
+    <div id="intro-screen">
+        <h1 id="intro-text"></h1>
+    </div>
+
+    <!-- Animated Background -->
+    <div class="bg-elements">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
+    <!-- Subtle Floating Financial Icons -->
+    <div class="effect-container">
+        <i class="fa-solid fa-coins floating-icon icon-1"></i>
+        <i class="fa-solid fa-wallet floating-icon icon-2"></i>
+        <i class="fa-solid fa-chart-line floating-icon icon-3"></i>
+        <i class="fa-solid fa-hand-holding-dollar floating-icon icon-4"></i>
+        <i class="fa-solid fa-building-columns floating-icon icon-5"></i>
+        <i class="fa-solid fa-sack-dollar floating-icon icon-6"></i>
+        <i class="fa-solid fa-piggy-bank floating-icon icon-7"></i>
+        <i class="fa-solid fa-credit-card floating-icon icon-8"></i>
+        <i class="fa-solid fa-receipt floating-icon icon-9"></i>
+        <i class="fa-solid fa-money-bill-wave floating-icon icon-10"></i>
+        <i class="fa-solid fa-scale-balanced floating-icon icon-11"></i>
+        <i class="fa-solid fa-file-invoice-dollar floating-icon icon-12"></i>
+        <i class="fa-solid fa-landmark floating-icon icon-13"></i>
+        <i class="fa-solid fa-money-check-dollar floating-icon icon-14"></i>
+        <i class="fa-solid fa-money-bills floating-icon icon-15"></i>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Loan Eligibility Result</h1>
+            <p>Your AI-powered profile assessment</p>
+        </div>
+
+        <!-- 1. Score Section -->
+        <div class="card score-card">
+            <div class="circular-progress">
+                <svg viewBox="0 0 160 160">
+                    <circle class="bg-circle" cx="80" cy="80" r="70"></circle>
+                    <circle class="progress-circle" cx="80" cy="80" r="70"></circle>
+                </svg>
+                <div class="score-text">
+                    <div class="score-value">78</div>
+                    <div class="score-total">/ 100</div>
+                </div>
+            </div>
+
+            <div class="approval-badge">
+                <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"
+                    style="width:18px;height:18px;">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                </svg>
+                Approval Chance: High
+            </div>
+            <p class="encouragement">Great job! You're very likely to get approved for this loan.</p>
+        </div>
+
+        <!-- 2. Why this score? -->
+        <div class="card">
+            <h2 class="card-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                </svg>
+                Why this score?
+            </h2>
+            <ul class="reasons-list">
+                <li class="reason-item">
+                    <div class="icon-box green">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M5 13l4 4L19 7"></path>
+                        </svg>
+                    </div>
+                    <div class="item-content">
+                        <h4>Good repayment history</h4>
+                        <p>You have consistently paid past obligations on time.</p>
+                    </div>
+                </li>
+                <li class="reason-item">
+                    <div class="icon-box green">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M5 13l4 4L19 7"></path>
+                        </svg>
+                    </div>
+                    <div class="item-content">
+                        <h4>Stable monthly income</h4>
+                        <p>Your income source is verified and meets our criteria.</p>
+                    </div>
+                </li>
+                <li class="reason-item">
+                    <div class="icon-box green">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M5 13l4 4L19 7"></path>
+                        </svg>
+                    </div>
+                    <div class="item-content">
+                        <h4>No missed EMIs</h4>
+                        <p>Your track record shows zero defaults in the last 24 months.</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 3. How to improve? -->
+        <div class="card">
+            <h2 class="card-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                    <polyline points="17 6 23 6 23 12"></polyline>
+                </svg>
+                How to improve?
+            </h2>
+            <ul class="improvements-list">
+                <li class="improvement-item">
+                    <div class="icon-box blue">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                        </svg>
+                    </div>
+                    <div class="item-content">
+                        <h4>Pay off small existing loans</h4>
+                        <p>Clearing minor debts will decrease your overall debt burden.</p>
+                    </div>
+                </li>
+                <li class="improvement-item">
+                    <div class="icon-box blue">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4M3 5v14a2 2 0 0 0 2 2h16v-5"></path>
+                            <path d="M18 12h.01"></path>
+                        </svg>
+                    </div>
+                    <div class="item-content">
+                        <h4>Reduce credit utilization below 30%</h4>
+                        <p>Try to use a smaller portion of your approved credit limits.</p>
+                    </div>
+                </li>
+                <li class="improvement-item">
+                    <div class="icon-box blue">
+                        <svg viewBox="0 0 24 24">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
+                    </div>
+                    <div class="item-content">
+                        <h4>Avoid multiple loan applications</h4>
+                        <p>Too many hard inquiries in a short time can temporarily drop your score.</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 4. What if analysis -->
+        <div class="card what-if-card">
+            <h2 class="card-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M2 12h4l3-9 5 18 3-9h5"></path>
+                </svg>
+                What-If Analysis
+            </h2>
+            <div class="what-if-content">
+                <div class="what-if-text">
+                    "If you reduce your existing loans by <strong>₹20,000</strong>, your score could jump to:"
+                </div>
+                <div class="what-if-score">
+                    <span>New Score</span>
+                    <strong><span class="new-val">85</span> / 100</strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. System Financial Review & Charts -->
+        <div class="card"
+            style="padding: 0; background: transparent; border: none; box-shadow: none; backdrop-filter: none;">
+            <div class="dashboard-section">
+                <!-- Data Summary -->
+                <div class="card" style="border-color: rgba(168, 85, 247, 0.3);">
+                    <h2 class="card-title" style="color: #d8b4fe;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"
+                            style="stroke: #d8b4fe;">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <path d="M14 2v6h6"></path>
+                            <path d="M16 13H8"></path>
+                            <path d="M16 17H8"></path>
+                            <path d="M10 9H8"></path>
+                        </svg>
+                        System Financial Review
+                    </h2>
+                    <p style="font-size: 13px; color: #cbd5e1; margin-bottom: 15px; margin-top: -10px;">Review your
+                        financial metrics computed securely by our system based on your inputs.</p>
+                    <div class="summary-box" style="margin-top: 0; border: none; background: rgba(0,0,0,0.1);">
+                        <div class="summary-row">
+                            <span class="summary-label">Debt-to-Income Ratio (DTI)</span>
+                            <span class="summary-value metric-good" id="dtiResult">32.5%</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="summary-label">EMI-to-Income (FOIR)</span>
+                            <span class="summary-value metric-good" id="etiResult">28.0%</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="summary-label">Loan-to-Value (LTV)</span>
+                            <span class="summary-value metric-average" id="ltvResult">85.0%</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="summary-label">Est. Monthly EMI</span>
+                            <span class="summary-value"
+                                style="color: #a855f7; text-shadow: 0 0 10px rgba(168,85,247,0.5);"
+                                id="estPayment">₹15,400</span>
+                        </div>
+                        <div class="summary-row"
+                            style="margin-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
+                            <span class="summary-label">Total Amount Payable</span>
+                            <span class="summary-value" style="color: #f8fafc;" id="totalPayable">₹9,24,000</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Glowing Charts Dashboard -->
+                <div class="chart-dashboard">
+                    <div class="chart-card">
+                        <div class="chart-title">Funding Portfolio</div>
+                        <div class="chart-value" id="loanValueLabel">₹5.0L</div>
+                        <div class="donut-container">
+                            <canvas id="fundingChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="chart-card">
+                        <div class="chart-title">Monthly Obligations</div>
+                        <div class="chart-value" style="color: #3b82f6;" id="debtValueLabel">₹25.4K</div>
+                        <div class="donut-container">
+                            <canvas id="cashflowChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="chart-card full-width">
+                        <div class="chart-title">Loan Progression Overview</div>
+                        <div class="area-container">
+                            <canvas id="amortizationChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="actions-wrapper">
+            <button class="action-btn-box secondary" onclick="window.history.back()">
+                <i class="fa-solid fa-arrow-left"></i> Previous Step
+            </button>
+            <button class="action-btn-box" onclick="window.print()">
+                <i class="fa-solid fa-file-pdf"></i> Download as PDF
+            </button>
+        </div>
+
+    </div>
+
+    <script>
+        // Intro Animation Logic
+        const introTextString = "LOAN ADDA";
+        const introContainer = document.getElementById("intro-text");
+        const introScreen = document.getElementById("intro-screen");
+        const introDirections = ["from-top", "from-bottom", "from-left", "from-right"];
+
+        introTextString.split("").forEach((char, index) => {
+            const span = document.createElement("span");
+            if (char === " ") {
+                span.innerHTML = "&nbsp;";
+            } else {
+                span.textContent = char;
+            }
+
+            const randomDir = introDirections[Math.floor(Math.random() * introDirections.length)];
+            span.classList.add(randomDir);
+            introContainer.appendChild(span);
+
+            setTimeout(() => {
+                span.classList.add("intro-animate");
+            }, index * 100);
+        });
+
+        const totalIntroAnimationTime = introTextString.length * 100 + 600;
+
+        setTimeout(() => {
+            introScreen.style.opacity = "0";
+            setTimeout(() => {
+                introScreen.style.display = "none";
+            }, 800);
+        }, totalIntroAnimationTime + 1000);
+
+        //-----------------------------------------
+        // Charts Implementation (from Loan Types Result Part)
+        //-----------------------------------------
+        let chartFunding = null;
+        let chartCashflow = null;
+        let chartAmortization = null;
+
+        // Custom glow plugin for Chart.js 
+        const glowPlugin = {
+            id: 'glowPlugin',
+            beforeDatasetsDraw: function (chart) {
+                const ctx = chart.ctx;
+                ctx.save();
+                ctx.shadowColor = chart.config.options.plugins.glowPlugin.color || 'rgba(0, 0, 0, 0)';
+                ctx.shadowBlur = chart.config.options.plugins.glowPlugin.blur || 0;
+                ctx.shadowOffsetX = 0;
+                ctx.shadowOffsetY = 0;
+            },
+            afterDatasetsDraw: function (chart) {
+                chart.ctx.restore();
+            }
+        };
+        Chart.register(glowPlugin);
+
+        function formatCompactCurrency(number) {
+            return Intl.NumberFormat('en-IN', {
+                style: 'currency',
+                currency: 'INR',
+                notation: "compact",
+                maximumFractionDigits: 1
+            }).format(number);
+        }
+
+        function renderDashboard(loan, downpay, income, totalDebt, newEmi, totalMonths, totalPayable) {
+
+            // Chart 1: Funding Portfolio (Donut -> Loan vs Downpay)
+            if (chartFunding) chartFunding.destroy();
+            const ctxFunding = document.getElementById('fundingChart').getContext('2d');
+            chartFunding = new Chart(ctxFunding, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Loan Requested', 'Down Payment'],
+                    datasets: [{
+                        data: [loan, downpay],
+                        backgroundColor: ['#4ade80', 'rgba(74, 222, 128, 0.2)'],
+                        borderColor: ['#22c55e', 'rgba(0,0,0,0)'],
+                        borderWidth: 2,
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '75%',
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { backgroundColor: 'rgba(15, 23, 42, 0.9)', titleColor: '#4ade80', bodyColor: '#fff', padding: 10, borderColor: '#4ade80', borderWidth: 1 },
+                        glowPlugin: { color: 'rgba(74, 222, 128, 0.6)', blur: 15 }
+                    }
+                }
+            });
+
+            // Chart 2: Monthly Cashflow (Donut -> Total Debt vs Remaining Income)
+            if (chartCashflow) chartCashflow.destroy();
+            let remainingIncome = income > totalDebt ? (income - totalDebt) : 0;
+            const ctxCashflow = document.getElementById('cashflowChart').getContext('2d');
+            chartCashflow = new Chart(ctxCashflow, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Debt Obligations', 'Free Income'],
+                    datasets: [{
+                        data: [totalDebt, remainingIncome],
+                        backgroundColor: ['#3b82f6', 'rgba(59, 130, 246, 0.2)'],
+                        borderColor: ['#2563eb', 'rgba(0,0,0,0)'],
+                        borderWidth: 2,
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '75%',
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { backgroundColor: 'rgba(15, 23, 42, 0.9)', titleColor: '#3b82f6', bodyColor: '#fff', padding: 10, borderColor: '#3b82f6', borderWidth: 1 },
+                        glowPlugin: { color: 'rgba(59, 130, 246, 0.6)', blur: 15 }
+                    }
+                }
+            });
+
+            // Chart 3: Amortization Projection (Area/Line)
+            let balances = [];
+            let labels = [];
+            let points = 6;
+            for (let i = 0; i <= points; i++) {
+                let val = loan * (1 - (i / points));
+                val = val + (val * 0.1 * Math.sin(i));
+                if (i === points) val = 0;
+                balances.push(val);
+                labels.push(`Year ${Math.round((totalMonths / 12) * (i / points))}`);
+            }
+
+            if (chartAmortization) chartAmortization.destroy();
+            const ctxArea = document.getElementById('amortizationChart').getContext('2d');
+
+            let gradient = ctxArea.createLinearGradient(0, 0, 0, 400);
+            gradient.addColorStop(0, 'rgba(74, 222, 128, 0.6)');
+            gradient.addColorStop(1, 'rgba(74, 222, 128, 0)');
+
+            chartAmortization = new Chart(ctxArea, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Remaining Principal',
+                        data: balances,
+                        borderColor: '#4ade80',
+                        backgroundColor: gradient,
+                        borderWidth: 3,
+                        pointBackgroundColor: '#0f172a',
+                        pointBorderColor: '#4ade80',
+                        pointBorderWidth: 2,
+                        pointRadius: 4,
+                        pointHoverRadius: 6,
+                        fill: true,
+                        tension: 0.4 // Smooth curve
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: 'rgba(255, 255, 255, 0.05)', drawBorder: false },
+                            ticks: { color: '#94a3b8', font: { family: "'Poppins', sans-serif", size: 10 }, callback: function (value) { return formatCompactCurrency(value); } }
+                        },
+                        x: {
+                            grid: { color: 'rgba(255, 255, 255, 0.05)', drawBorder: false },
+                            ticks: { color: '#94a3b8', font: { family: "'Poppins', sans-serif", size: 10 } }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { backgroundColor: 'rgba(15, 23, 42, 0.9)', titleColor: '#4ade80', bodyColor: '#fff', padding: 10, borderColor: 'rgba(255,255,255,0.1)', borderWidth: 1, mode: 'index', intersect: false },
+                        glowPlugin: { color: 'rgba(74, 222, 128, 0.5)', blur: 10 }
+                    },
+                    interaction: { mode: 'nearest', axis: 'x', intersect: false }
+                }
+            });
+        }
+
+        // Initialize dashboard with mock values representing a sample profile evaluation
+        // Render: Loan: 5,00,000 | Downpayment: 1,50,000 | Income: 65,000 | Prev EMI+New: 25,400
+        renderDashboard(500000, 150000, 65000, 25400, 15400, 60, 924000);
+
+    </script>
+</body>
+
+</html>

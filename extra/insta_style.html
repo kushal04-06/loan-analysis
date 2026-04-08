@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOAN ADDA • Login Portal</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #0095f6;
+            --primary-blue-hover: #1877f2;
+            --bg-dark: #0f172a;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --border-glass: rgba(255, 255, 255, 0.1);
+            --text-white: #ffffff;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background: var(--bg-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            color: var(--text-white);
+            position: relative;
+        }
+
+        /* Animated Background Blobs */
+        .blob {
+            position: absolute;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.6;
+            animation: float 10s infinite ease-in-out alternate;
+        }
+
+        .blob-1 { width: 400px; height: 400px; background: #3b82f6; top: -100px; left: -100px; border-radius: 50%; }
+        .blob-2 { width: 500px; height: 500px; background: #8b5cf6; bottom: -150px; right: -100px; border-radius: 50%; animation-delay: -5s; }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(30px, 50px) scale(1.1); }
+        }
+
+        .main-container {
+            width: 350px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 10;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        /* Top Box - Dark Glassmorphic */
+        .top-box {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-glass);
+            border-radius: 12px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 35px;
+            background: linear-gradient(135deg, #4ade80 0%, #3b82f6 50%, #a855f7 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-style: italic;
+        }
+
+        .form-group {
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        .form-group input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.08); /* Dark input bg */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            padding: 12px 10px;
+            color: #fff;
+            font-size: 13px;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .form-group input:focus {
+            border-color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .login-btn {
+            width: 100%;
+            background-color: var(--primary-blue);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+
+        .login-btn:hover {
+            background-color: var(--primary-blue-hover);
+            transform: translateY(-1px);
+        }
+
+        /* Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            gap: 15px;
+            color: var(--text-muted);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .divider .line {
+            flex: 1;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .fb-login {
+            color: var(--primary-blue);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            transition: 0.3s;
+            background: none;
+            border: none;
+        }
+
+        .forgot-pass {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        /* Bottom Box - Dark Glassmorphic */
+        .bottom-box {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-glass);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            font-size: 14px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .bottom-box a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .bottom-box a:hover { text-decoration: underline; }
+
+        .hidden { display: none; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate { animation: fadeIn 0.4s ease-out; }
+
+        footer {
+            margin-top: 50px;
+            font-size: 12px;
+            color: var(--text-muted);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            max-width: 800px;
+            text-align: center;
+            z-index: 5;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
+    <div class="main-container">
+        <!-- Top Box -->
+        <div class="top-box">
+            <div class="logo">LOAN ADDA</div>
+
+            <!-- Login View -->
+            <div id="login-view" class="animate">
+                <form onsubmit="event.preventDefault(); handleLogin();">
+                    <div class="form-group">
+                        <input type="text" id="login-id" placeholder="Phone number, username, or email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="login-pass" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="login-btn">Log In</button>
+                    
+                    <div class="divider">
+                        <div class="line"></div>
+                        <span>OR</span>
+                        <div class="line"></div>
+                    </div>
+
+                    <button type="button" class="fb-login">
+                        <i class="fa-brands fa-square-facebook" style="font-size: 18px;"></i>
+                        Log in with Facebook
+                    </button>
+
+                    <a href="#" class="forgot-pass">Forgot password?</a>
+                </form>
+            </div>
+
+            <!-- Sign Up View -->
+            <div id="signup-view" class="hidden animate">
+                <p style="color: var(--text-muted); font-size: 16px; font-weight: 600; margin-bottom: 20px;">
+                    Sign up to see loan offers and manage your finances.
+                </p>
+                <form onsubmit="event.preventDefault(); handleSignUp();">
+                    <div class="form-group">
+                        <input type="text" id="signup-email" placeholder="Mobile Number or Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="signup-name" placeholder="Full Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="signup-user" placeholder="Username" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="signup-pass" placeholder="Password" required>
+                    </div>
+                    <p style="font-size: 11px; color: var(--text-muted); margin: 15px 0; line-height: 1.4;">
+                        People who use our service may have uploaded your contact information to LOAN ADDA. <a href="#" style="color: var(--text-muted)">Learn More</a>
+                    </p>
+                    <button type="submit" class="login-btn">Sign Up</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Bottom Box -->
+        <div class="bottom-box">
+            <span id="toggle-text">Don't have an account?</span>
+            <a href="javascript:void(0)" onclick="toggleAuth()" id="toggle-link">Sign up</a>
+        </div>
+    </div>
+
+    <footer>
+        <a href="#">Meta</a> • <a href="#">About</a> • <a href="#">Blog</a> • <a href="#">Jobs</a> • <a href="#">Help</a> • <a href="#">API</a> • <a href="#">Privacy</a> • <a href="#">Terms</a>
+        <span style="display: block; margin-top: 10px; width: 100%;">© 2024 LOAN ADDA FROM META</span>
+    </footer>
+
+    <script>
+        let isLogin = true;
+
+        function toggleAuth() {
+            const loginView = document.getElementById('login-view');
+            const signupView = document.getElementById('signup-view');
+            const toggleText = document.getElementById('toggle-text');
+            const toggleLink = document.getElementById('toggle-link');
+
+            if (isLogin) {
+                loginView.classList.add('hidden');
+                signupView.classList.remove('hidden');
+                toggleText.innerText = "Have an account?";
+                toggleLink.innerText = "Log in";
+            } else {
+                loginView.classList.remove('hidden');
+                signupView.classList.add('hidden');
+                toggleText.innerText = "Don't have an account?";
+                toggleLink.innerText = "Sign up";
+            }
+            isLogin = !isLogin;
+        }
+
+        function handleLogin() {
+            const pass = document.getElementById('login-pass').value;
+            if (pass === 'kushal') {
+                window.location.href = '../3)dash board/index.html';
+            } else {
+                alert('Access Denied: Incorrect Password! (HINT: kushal)');
+            }
+        }
+
+        function handleSignUp() {
+            window.location.href = 'profile_setup.html';
+        }
+    </script>
+</body>
+
+</html>
