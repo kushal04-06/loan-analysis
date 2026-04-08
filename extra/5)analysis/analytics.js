@@ -1,3 +1,10 @@
+const API_BASE = window.APP_CONFIG?.API_BASE || 'http://localhost:5000/api';
+const token = localStorage.getItem('loanToken');
+
+if (!token) {
+    window.location.href = '../../2)login page/login.html';
+}
+
 // Chart Defaults
 Chart.defaults.color = '#94a3b8';
 Chart.defaults.font.family = "'Inter', sans-serif";
@@ -191,6 +198,61 @@ axis.className = 'growth-axis';
 });
 growthContainer.appendChild(axis);
 
+async function loadDashboardData() {
+    if (!token) return;
+    try {
+        const response = await fetch(`${API_BASE}/dashboard`, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+        const result = await response.json();
+        if (response.status === 401) {
+            localStorage.removeItem('loanToken');
+            alert('Session expired. Please login again.');
+            window.location.href = '../../2)login page/login.html';
+            return;
+        }
+        if (!response.ok || !result.ok) throw new Error(result.message || 'Failed to load dashboard data');
+
+        const data = result.data || {};
+
+        if (data.balance) document.getElementById('val-balance').innerText = data.balance;
+        if (data.progress) document.getElementById('val-progress').innerText = data.progress;
+        if (data.rates) document.getElementById('val-rates').innerText = data.rates;
+        if (typeof data.loanProgress === 'number') {
+            document.getElementById('val-loan-progress').style.width = data.loanProgress + '%';
+        }
+
+        if (data.overviewChart) {
+            const { metric1, metric2, metric3 } = data.overviewChart;
+            if (Array.isArray(metric1)) overviewChart.data.datasets[0].data = metric1;
+            if (Array.isArray(metric2)) overviewChart.data.datasets[1].data = metric2;
+            if (Array.isArray(metric3)) overviewChart.data.datasets[2].data = metric3;
+            overviewChart.update();
+        }
+
+        // Also prefill modal inputs so edits start with backend values.
+        const balanceInput = document.getElementById('in-balance');
+        const progressInput = document.getElementById('in-progress');
+        const ratesInput = document.getElementById('in-rates');
+        const loanProgressInput = document.getElementById('in-loan-progress');
+        const ov1Input = document.getElementById('in-overview-1');
+        const ov2Input = document.getElementById('in-overview-2');
+        const ov3Input = document.getElementById('in-overview-3');
+
+        if (data.balance && balanceInput) balanceInput.value = data.balance;
+        if (data.progress && progressInput) progressInput.value = data.progress;
+        if (data.rates && ratesInput) ratesInput.value = data.rates;
+        if (typeof data.loanProgress === 'number' && loanProgressInput) loanProgressInput.value = data.loanProgress;
+        if (data.overviewChart?.metric1 && ov1Input) ov1Input.value = data.overviewChart.metric1.join(', ');
+        if (data.overviewChart?.metric2 && ov2Input) ov2Input.value = data.overviewChart.metric2.join(', ');
+        if (data.overviewChart?.metric3 && ov3Input) ov3Input.value = data.overviewChart.metric3.join(', ');
+    } catch (err) {
+        console.error('Dashboard API load failed:', err);
+    }
+}
+
+loadDashboardData();
+
 
 // User Input / Data Update Logic
 const modal = document.getElementById('dataModal');
@@ -202,8 +264,9 @@ openBtn.onclick = () => modal.classList.add('show');
 closeBtn.onclick = () => modal.classList.remove('show');
 window.onclick = (e) => { if (e.target == modal) modal.classList.remove('show'); };
 
-form.onsubmit = (e) => {
+form.onsubmit = async (e) => {
     e.preventDefault();
+    if (!token) return;
     
     // Update Text Values
     document.getElementById('val-balance').innerText = document.getElementById('in-balance').value;
@@ -234,10 +297,33 @@ form.onsubmit = (e) => {
         document.getElementById('arc-balance').style.strokeDashoffset = Math.random() * 100;
         document.getElementById('arc-progress').style.strokeDashoffset = Math.random() * 100 + 20;
         document.getElementById('arc-rates').style.strokeDashoffset = Math.random() * 100 + 40;
+
+        const updateResponse = await fetch(`${API_BASE}/dashboard`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                balance: document.getElementById('in-balance').value,
+                progress: document.getElementById('in-progress').value,
+                rates: document.getElementById('in-rates').value,
+                loanProgress: Number(pct),
+                overviewChart: {
+                    metric1: d1,
+                    metric2: d2,
+                    metric3: d3
+                }
+            })
+        });
+
+        if (!updateResponse.ok) {
+            throw new Error('Failed to save dashboard data');
+        }
         
     } catch(err) {
-        console.error("Invalid data format", err);
-        alert("Please enter comma-separated numbers for the chart data.");
+        console.error("Dashboard update failed", err);
+        alert(err.message || "Please enter comma-separated numbers for chart data.");
     }
     
     modal.classList.remove('show');

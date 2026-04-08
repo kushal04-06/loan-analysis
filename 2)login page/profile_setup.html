@@ -484,9 +484,9 @@
                     <i class="fa-solid fa-money-bill-trend-up"></i>
                 </div>
 
-                <button type="submit" class="signup-btn">
-                    Sign up <i class="fa-solid fa-arrow-right"></i>
-                </button>
+                <button type="button" class="signup-btn" onclick="submitForm()">
+  Sign up <i class="fa-solid fa-arrow-right"></i>
+</button>
 
                 <p
                     style="grid-column: span 2; text-align: center; font-size: 11px; color: rgba(255,255,255,0.7); margin-top: 5px;">
@@ -525,6 +525,26 @@
             window.location.href = '../3)dash board/index.html';
         });
     </script>
+    <script type="module">
+import { db } from "../firebase.js";
+import { addDoc, collection } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+window.submitForm = async function () {
+  const data = {
+    name: document.getElementById("p_name").value,
+    email: document.getElementById("p_email").value,
+    phone: document.getElementById("p_phone").value,
+    username: document.getElementById("p_username").value,
+    password: document.getElementById("p_password").value,
+    age: document.getElementById("p_age").value,
+    income: document.getElementById("p_income").value
+  };
+
+  await addDoc(collection(db, "users"), data);
+
+  alert("Data saved successfully 🚀");
+};
+</script>
 </body>
 
 </html>

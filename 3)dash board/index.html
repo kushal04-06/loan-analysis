@@ -710,7 +710,7 @@
                 <p data-translate="preApproved" style="font-size: 11px; color: #cbd5e1; margin-bottom: 8px;">Get
                     pre-approved in seconds!
                 </p>
-                <a href="../4)loan prediction page/prediction_theme.html" style="text-decoration: none;">
+                <a href="../extra/4)loan prediction page/prediction_theme.html" style="text-decoration: none;">
                     <button class="card-btn" style="width: 100%; padding: 6px; font-size: 11px; margin-top: 5px;">Get Started</button>
                 </a>
             </div>
@@ -774,7 +774,7 @@
 
                             <hr>
                             <div class="profile-item logout"
-                                onclick="window.location.href = '../2)login page/login.html';"><span>🚪</span> Logout
+                                onclick="logoutUser();"><span>🚪</span> Logout
                             </div>
                         </div>
                     </div>
@@ -869,6 +869,12 @@
     </div>
 
     <script>
+        function logoutUser() {
+            localStorage.removeItem('loanToken');
+            localStorage.removeItem('loanUser');
+            window.location.href = '../2)login page/login.html';
+        }
+
         // Multi-Language System
         const translations = {
             en: {

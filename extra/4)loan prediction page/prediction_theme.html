@@ -339,44 +339,69 @@
         </div>
     </div>
 
+    <script src="../../config.js"></script>
     <script>
-        function predictLoan() {
+        const API_BASE = window.APP_CONFIG?.API_BASE || 'http://localhost:5000/api';
+
+        async function predictLoan() {
             const btn = document.getElementById('predictBtn');
             const resultBox = document.getElementById('resultBox');
-            
-            const income = document.getElementById('annualIncome').value;
-            const amount = document.getElementById('loanAmount').value;
-            const score = document.getElementById('creditScore').value;
 
-            // Simple loading state animation
+            const fullName = document.getElementById('fullName').value.trim();
+            const annualIncome = Number(document.getElementById('annualIncome').value);
+            const loanAmount = Number(document.getElementById('loanAmount').value);
+            const creditScore = Number(document.getElementById('creditScore').value);
+
             btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Analyzing...';
             btn.style.opacity = '0.8';
+            btn.disabled = true;
             resultBox.style.display = 'none';
 
-            // Simulate AI calculation
-            setTimeout(() => {
+            try {
+                const response = await fetch(`${API_BASE}/loan/predict`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ fullName, annualIncome, loanAmount, creditScore })
+                });
+
+                const result = await response.json();
+                if (!response.ok || !result.ok) {
+                    throw new Error(result.message || 'Prediction failed');
+                }
+
+                const { status, message } = result.data;
+
                 btn.innerHTML = 'Predict Eligibility';
                 btn.style.opacity = '1';
+                btn.disabled = false;
                 resultBox.style.display = 'block';
 
-                // Basic mock algorithm for realistic effect
-                if(score >= 700 && (income > amount * 0.3)) {
+                if (status === 'approved') {
                     resultBox.style.background = 'rgba(46, 213, 115, 0.1)';
                     resultBox.style.borderColor = 'rgba(46, 213, 115, 0.3)';
                     resultBox.style.color = '#2ed573';
-                    resultBox.innerHTML = '<i class="fa-solid fa-circle-check"></i> <strong>Approved!</strong> Excellent probability of loan approval.';
-                } else if (score >= 600 && score < 700) {
+                    resultBox.innerHTML = '<i class="fa-solid fa-circle-check"></i> <strong>Approved!</strong> ' + message;
+                } else if (status === 'moderate') {
                     resultBox.style.background = 'rgba(255, 165, 2, 0.1)';
                     resultBox.style.borderColor = 'rgba(255, 165, 2, 0.3)';
                     resultBox.style.color = '#ffa502';
-                    resultBox.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> <strong>Moderate.</strong> May require collateral or cosigner.';
+                    resultBox.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> <strong>Moderate.</strong> ' + message;
                 } else {
                     resultBox.style.background = 'rgba(255, 71, 87, 0.1)';
                     resultBox.style.borderColor = 'rgba(255, 71, 87, 0.3)';
                     resultBox.style.color = '#ff4757';
-                    resultBox.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> <strong>Declined.</strong> Credit score and income ratio too low.';
+                    resultBox.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> <strong>Declined.</strong> ' + message;
                 }
-            }, 1500);
+            } catch (err) {
+                btn.innerHTML = 'Predict Eligibility';
+                btn.style.opacity = '1';
+                btn.disabled = false;
+                resultBox.style.display = 'block';
+                resultBox.style.background = 'rgba(255, 71, 87, 0.1)';
+                resultBox.style.borderColor = 'rgba(255, 71, 87, 0.3)';
+                resultBox.style.color = '#ff4757';
+                resultBox.innerHTML = `<i class="fa-solid fa-circle-xmark"></i> <strong>Error.</strong> ${err.message || 'Unable to fetch prediction.'}`;
+            }
         }
     </script>
 </body>

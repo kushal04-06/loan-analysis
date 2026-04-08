@@ -1,0 +1,51 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "admin",
+      "name": "Admin User",
+      "passwordHash": "$2b$10$IIu10iSObv3jBrxx4o9RmOOLPh0hti5Z/xs2.wQgWvK1MTrNHJ.ga"
+    },
+    {
+      "id": 2,
+      "username": "demo",
+      "name": "Demo User",
+      "passwordHash": "$2b$10$b7xNGHUptnnnmAGDSf4nLeB13Z.XJcJ6b0nW8l7PNLyiWfTtwdXV."
+    }
+  ],
+  "dashboard": {
+    "balance": "₹63.0B",
+    "progress": "₹28.0 kh",
+    "rates": "7.77%",
+    "loanProgress": 50,
+    "overviewChart": {
+      "metric1": [
+        10,
+        60,
+        40,
+        90,
+        160,
+        60,
+        190
+      ],
+      "metric2": [
+        10,
+        40,
+        80,
+        50,
+        130,
+        90,
+        160
+      ],
+      "metric3": [
+        80,
+        60,
+        120,
+        100,
+        180,
+        140,
+        220
+      ]
+    }
+  }
+}

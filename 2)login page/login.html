@@ -310,23 +310,40 @@
         </div>
     </div>
 
+    <script src="../config.js"></script>
     <script>
-        function handleLogin() {
+        const API_BASE = window.APP_CONFIG?.API_BASE || 'http://localhost:5000/api';
+
+        async function handleLogin() {
             const btn = document.getElementById('predictBtn');
-            const pass = document.getElementById('login-password').value;
-            
+            const username = document.getElementById('login-user').value.trim();
+            const password = document.getElementById('login-password').value;
+
             btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Authenticating...';
             btn.style.opacity = '0.8';
+            btn.disabled = true;
 
-            setTimeout(() => {
-                if (pass === 'kushal') {
-                    window.location.href = '../3)dash board/index.html';
-                } else {
-                    alert('Invalid password! (Hint: use kushal)');
-                    btn.innerHTML = 'Login';
-                    btn.style.opacity = '1';
+            try {
+                const response = await fetch(`${API_BASE}/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const result = await response.json();
+                if (!response.ok || !result.ok) {
+                    throw new Error(result.message || 'Login failed');
                 }
-            }, 1000);
+
+                localStorage.setItem('loanUser', JSON.stringify(result.user));
+                localStorage.setItem('loanToken', result.token);
+                window.location.href = '../3)dash board/index.html';
+            } catch (err) {
+                alert(err.message || 'Unable to login. Please try again.');
+                btn.innerHTML = 'Login';
+                btn.style.opacity = '1';
+                btn.disabled = false;
+            }
         }
     </script>
 </body>
